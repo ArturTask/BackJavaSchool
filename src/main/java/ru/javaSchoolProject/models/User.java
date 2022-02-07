@@ -20,7 +20,7 @@ public class User implements Serializable {
     public User(String log, String pas){
         this.login=log;
         this.password = pas;
-        this.role=Role.CUSTOMER;
+        this.role=Role.ROLE_CUSTOMER;
     }
 
     @Id
