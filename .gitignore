@@ -5,5 +5,5 @@
 .settings
 target/*
 *.iml
-.DS_Storage
+*.DS_Storage
 
