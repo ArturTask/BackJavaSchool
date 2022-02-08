@@ -4,10 +4,11 @@ import ru.javaSchoolProject.services.UserService;
 
 public class Main {
     public static void main(String[] args) {
-        UserService uS = new UserService();
-//
-//        User a = new User("1","1", Role.ADMIN);
-//        uS.saveUser(a);
+//        BasicConfigurator.configure();
+//        UserService uS = new UserService();
+////
+//        User a = new User("1","1", Role.ROLE_ADMIN);
+//        uS.saveUser("1","1");
 //        User u = new User("Artur","1", Role.CUSTOMER);
 //        uS.saveUser(u);
 //        User u2 = new User("1","2", Role.ADMIN);

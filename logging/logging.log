@@ -1,0 +1,481 @@
+Logging Provider: org.jboss.logging.Log4jLoggerProvider
+Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
+Adding Integrator [org.hibernate.secure.spi.JaccIntegrator].
+Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+HHH000412: Hibernate Core {5.2.6.Final}
+HHH000206: hibernate.properties not found
+cfg.xml document did not define namespaces; wrapping in custom event reader to introduce namespace information
+Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
+Adding Integrator [org.hibernate.secure.spi.JaccIntegrator].
+Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+Overriding existing service binding [org.hibernate.secure.spi.JaccService]
+Building session factory using provided StandardServiceRegistry
+Cache region factory : org.hibernate.cache.internal.NoCachingRegionFactory
+HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+Adding type registration boolean -> org.hibernate.type.BooleanType@16f7c8c1
+Adding type registration boolean -> org.hibernate.type.BooleanType@16f7c8c1
+Adding type registration java.lang.Boolean -> org.hibernate.type.BooleanType@16f7c8c1
+Adding type registration numeric_boolean -> org.hibernate.type.NumericBooleanType@5c18298f
+Adding type registration true_false -> org.hibernate.type.TrueFalseType@5d11346a
+Adding type registration yes_no -> org.hibernate.type.YesNoType@b3d7190
+Adding type registration byte -> org.hibernate.type.ByteType@52525845
+Adding type registration byte -> org.hibernate.type.ByteType@52525845
+Adding type registration java.lang.Byte -> org.hibernate.type.ByteType@52525845
+Adding type registration character -> org.hibernate.type.CharacterType@35a50a4c
+Adding type registration char -> org.hibernate.type.CharacterType@35a50a4c
+Adding type registration java.lang.Character -> org.hibernate.type.CharacterType@35a50a4c
+Adding type registration short -> org.hibernate.type.ShortType@6d3af739
+Adding type registration short -> org.hibernate.type.ShortType@6d3af739
+Adding type registration java.lang.Short -> org.hibernate.type.ShortType@6d3af739
+Adding type registration integer -> org.hibernate.type.IntegerType@71623278
+Adding type registration int -> org.hibernate.type.IntegerType@71623278
+Adding type registration java.lang.Integer -> org.hibernate.type.IntegerType@71623278
+Adding type registration long -> org.hibernate.type.LongType@4bb4de6a
+Adding type registration long -> org.hibernate.type.LongType@4bb4de6a
+Adding type registration java.lang.Long -> org.hibernate.type.LongType@4bb4de6a
+Adding type registration float -> org.hibernate.type.FloatType@b9afc07
+Adding type registration float -> org.hibernate.type.FloatType@b9afc07
+Adding type registration java.lang.Float -> org.hibernate.type.FloatType@b9afc07
+Adding type registration double -> org.hibernate.type.DoubleType@57f23557
+Adding type registration double -> org.hibernate.type.DoubleType@57f23557
+Adding type registration java.lang.Double -> org.hibernate.type.DoubleType@57f23557
+Adding type registration big_decimal -> org.hibernate.type.BigDecimalType@5f71c76a
+Adding type registration java.math.BigDecimal -> org.hibernate.type.BigDecimalType@5f71c76a
+Adding type registration big_integer -> org.hibernate.type.BigIntegerType@4b9e255
+Adding type registration java.math.BigInteger -> org.hibernate.type.BigIntegerType@4b9e255
+Adding type registration string -> org.hibernate.type.StringType@7f416310
+Adding type registration java.lang.String -> org.hibernate.type.StringType@7f416310
+Adding type registration nstring -> org.hibernate.type.StringNVarcharType@60438a68
+Adding type registration ncharacter -> org.hibernate.type.CharacterNCharType@17695df3
+Adding type registration url -> org.hibernate.type.UrlType@3d8314f0
+Adding type registration java.net.URL -> org.hibernate.type.UrlType@3d8314f0
+Adding type registration Duration -> org.hibernate.type.DurationType@3bd94634
+Adding type registration java.time.Duration -> org.hibernate.type.DurationType@3bd94634
+Adding type registration Instant -> org.hibernate.type.InstantType@49c43f4e
+Adding type registration java.time.Instant -> org.hibernate.type.InstantType@49c43f4e
+Adding type registration LocalDateTime -> org.hibernate.type.LocalDateTimeType@2d127a61
+Adding type registration java.time.LocalDateTime -> org.hibernate.type.LocalDateTimeType@2d127a61
+Adding type registration LocalDate -> org.hibernate.type.LocalDateType@365c30cc
+Adding type registration java.time.LocalDate -> org.hibernate.type.LocalDateType@365c30cc
+Adding type registration LocalTime -> org.hibernate.type.LocalTimeType@5e25a92e
+Adding type registration java.time.LocalTime -> org.hibernate.type.LocalTimeType@5e25a92e
+Adding type registration OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1dd02175
+Adding type registration java.time.OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1dd02175
+Adding type registration OffsetTime -> org.hibernate.type.OffsetTimeType@1176dcec
+Adding type registration java.time.OffsetTime -> org.hibernate.type.OffsetTimeType@1176dcec
+Adding type registration ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@16267862
+Adding type registration java.time.ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@16267862
+Adding type registration date -> org.hibernate.type.DateType@6b0c2d26
+Adding type registration java.sql.Date -> org.hibernate.type.DateType@6b0c2d26
+Adding type registration time -> org.hibernate.type.TimeType@27c6e487
+Adding type registration java.sql.Time -> org.hibernate.type.TimeType@27c6e487
+Adding type registration timestamp -> org.hibernate.type.TimestampType@59717824
+Adding type registration java.sql.Timestamp -> org.hibernate.type.TimestampType@59717824
+Adding type registration java.util.Date -> org.hibernate.type.TimestampType@59717824
+Adding type registration dbtimestamp -> org.hibernate.type.DbTimestampType@146044d7
+Adding type registration calendar -> org.hibernate.type.CalendarType@3c0a50da
+Adding type registration java.util.Calendar -> org.hibernate.type.CalendarType@3c0a50da
+Adding type registration java.util.GregorianCalendar -> org.hibernate.type.CalendarType@3c0a50da
+Adding type registration calendar_date -> org.hibernate.type.CalendarDateType@77be656f
+Adding type registration locale -> org.hibernate.type.LocaleType@78a2da20
+Adding type registration java.util.Locale -> org.hibernate.type.LocaleType@78a2da20
+Adding type registration currency -> org.hibernate.type.CurrencyType@7bc1a03d
+Adding type registration java.util.Currency -> org.hibernate.type.CurrencyType@7bc1a03d
+Adding type registration timezone -> org.hibernate.type.TimeZoneType@709ba3fb
+Adding type registration java.util.TimeZone -> org.hibernate.type.TimeZoneType@709ba3fb
+Adding type registration class -> org.hibernate.type.ClassType@58c1c010
+Adding type registration java.lang.Class -> org.hibernate.type.ClassType@58c1c010
+Adding type registration uuid-binary -> org.hibernate.type.UUIDBinaryType@345965f2
+Adding type registration java.util.UUID -> org.hibernate.type.UUIDBinaryType@345965f2
+Adding type registration uuid-char -> org.hibernate.type.UUIDCharType@279ad2e3
+Adding type registration binary -> org.hibernate.type.BinaryType@77e4c80f
+Adding type registration byte[] -> org.hibernate.type.BinaryType@77e4c80f
+Adding type registration [B -> org.hibernate.type.BinaryType@77e4c80f
+Adding type registration wrapper-binary -> org.hibernate.type.WrapperBinaryType@255b53dc
+Adding type registration Byte[] -> org.hibernate.type.WrapperBinaryType@255b53dc
+Adding type registration [Ljava.lang.Byte; -> org.hibernate.type.WrapperBinaryType@255b53dc
+Adding type registration row_version -> org.hibernate.type.RowVersionType@4f9a3314
+Adding type registration image -> org.hibernate.type.ImageType@51931956
+Adding type registration characters -> org.hibernate.type.CharArrayType@62e136d3
+Adding type registration char[] -> org.hibernate.type.CharArrayType@62e136d3
+Adding type registration [C -> org.hibernate.type.CharArrayType@62e136d3
+Adding type registration wrapper-characters -> org.hibernate.type.CharacterArrayType@57175e74
+Adding type registration [Ljava.lang.Character; -> org.hibernate.type.CharacterArrayType@57175e74
+Adding type registration Character[] -> org.hibernate.type.CharacterArrayType@57175e74
+Adding type registration text -> org.hibernate.type.TextType@4d826d77
+Adding type registration ntext -> org.hibernate.type.NTextType@7f77e91b
+Adding type registration blob -> org.hibernate.type.BlobType@5d47c63f
+Adding type registration java.sql.Blob -> org.hibernate.type.BlobType@5d47c63f
+Adding type registration materialized_blob -> org.hibernate.type.MaterializedBlobType@4ae3c1cd
+Adding type registration clob -> org.hibernate.type.ClobType@25b485ba
+Adding type registration java.sql.Clob -> org.hibernate.type.ClobType@25b485ba
+Adding type registration nclob -> org.hibernate.type.NClobType@1d548a08
+Adding type registration java.sql.NClob -> org.hibernate.type.NClobType@1d548a08
+Adding type registration materialized_clob -> org.hibernate.type.MaterializedClobType@691a7f8f
+Adding type registration materialized_nclob -> org.hibernate.type.MaterializedNClobType@17c1bced
+Adding type registration serializable -> org.hibernate.type.SerializableType@3ee0fea4
+Adding type registration object -> org.hibernate.type.ObjectType@6646153
+Adding type registration java.lang.Object -> org.hibernate.type.ObjectType@6646153
+Adding type registration imm_date -> org.hibernate.type.AdaptedImmutableType@6295d394
+Adding type registration imm_time -> org.hibernate.type.AdaptedImmutableType@475e586c
+Adding type registration imm_timestamp -> org.hibernate.type.AdaptedImmutableType@657c8ad9
+Adding type registration imm_dbtimestamp -> org.hibernate.type.AdaptedImmutableType@436a4e4b
+Adding type registration imm_calendar -> org.hibernate.type.AdaptedImmutableType@f2f2cc1
+Adding type registration imm_calendar_date -> org.hibernate.type.AdaptedImmutableType@3a079870
+Adding type registration imm_binary -> org.hibernate.type.AdaptedImmutableType@3b2cf7ab
+Adding type registration imm_serializable -> org.hibernate.type.AdaptedImmutableType@2aa5fe93
+HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+HHH10001005: using driver [com.mysql.cj.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/JavaSchoolDB?serverTimezone=Europe/Moscow]
+HHH10001001: Connection properties: {useUnicode=true, user=root, password=1234567a, CharSet=utf8, characterEncoding=utf8}
+HHH10001003: Autocommit mode: false
+Initializing Connection pool with 1 Connections
+HHH000115: Hibernate connection pool size: 20 (min=1)
+Database ->
+       name : MySQL
+    version : 8.0.28
+      major : 8
+      minor : 0
+Driver ->
+       name : MySQL Connector/J
+    version : mysql-connector-java-8.0.13 (Revision: 66459e9d39c8fd09767992bc592acd2053279be6)
+      major : 8
+      minor : 0
+JDBC version : 4.2
+HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+JDBC driver metadata reported database stores quoted identifiers in more than one case
+IdentifierCaseStrategy for both quoted and unquoted identifiers was set to the same strategy [MIXED]; that will likely lead to problems in schema update and validation if using quoted identifiers
+Registering IdentifierGenerator strategy [uuid2] -> [org.hibernate.id.UUIDGenerator]
+Registering IdentifierGenerator strategy [guid] -> [org.hibernate.id.GUIDGenerator]
+Registering IdentifierGenerator strategy [uuid] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [uuid.hex] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [assigned] -> [org.hibernate.id.Assigned]
+Registering IdentifierGenerator strategy [identity] -> [org.hibernate.id.IdentityGenerator]
+Registering IdentifierGenerator strategy [select] -> [org.hibernate.id.SelectGenerator]
+Registering IdentifierGenerator strategy [sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+Registering IdentifierGenerator strategy [seqhilo] -> [org.hibernate.id.SequenceHiLoGenerator]
+Registering IdentifierGenerator strategy [increment] -> [org.hibernate.id.IncrementGenerator]
+Registering IdentifierGenerator strategy [foreign] -> [org.hibernate.id.ForeignGenerator]
+Registering IdentifierGenerator strategy [sequence-identity] -> [org.hibernate.id.SequenceIdentityGenerator]
+Registering IdentifierGenerator strategy [enhanced-sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+Registering IdentifierGenerator strategy [enhanced-table] -> [org.hibernate.id.enhanced.TableGenerator]
+Created database namespace [logicalName=Name{catalog=null, schema=null}, physicalName=Name{catalog=null, schema=null}]
+Binding entity from annotated class: ru.javaSchoolProject.models.User
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name User
+Bind entity ru.javaSchoolProject.models.User on table users
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(users), mappingColumn=id, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [ru.javaSchoolProject.models.User:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(users), mappingColumn=login, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property login with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [ru.javaSchoolProject.models.User:login]
+building SimpleValue for login
+Building property login
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(users), mappingColumn=password, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property password with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [ru.javaSchoolProject.models.User:password]
+building SimpleValue for password
+Building property password
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(users), mappingColumn=role, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property role with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [ru.javaSchoolProject.models.User:role]
+building SimpleValue for role
+Building property role
+Starting fillSimpleValue for id
+Starting fillSimpleValue for login
+Starting fillSimpleValue for password
+Starting fillSimpleValue for role
+Forcing column [id] to be non-null as it is part of the primary key for table [users]
+Building session factory
+SessionFactory name : null
+Automatic flush during beforeCompletion(): enabled
+Automatic session close at end of transaction: disabled
+Statistics: disabled
+Deleted entity synthetic identifier rollback: disabled
+Default entity-mode: pojo
+Check Nullability in Core (should be disabled when Bean Validation is on): enabled
+Allow initialization of lazy state outside session : disabled
+Using BatchFetchStyle : LEGACY
+Default batch fetch size: -1
+Maximum outer join fetch depth: 2
+Default null ordering: NONE
+Order SQL updates by primary key: disabled
+Order SQL inserts for batching: disabled
+multi-tenancy strategy : NONE
+JTA Track by Thread: enabled
+Query language substitutions: {}
+JPA query language strict compliance: disabled
+Named query checking : enabled
+Second-level cache: enabled
+Second-level query cache: disabled
+Second-level query cache factory: org.hibernate.cache.internal.StandardQueryCacheFactory@4879dfad
+Second-level cache region prefix: null
+Optimize second-level cache for minimal puts: disabled
+Structured second-level cache entries: disabled
+Second-level cache direct-reference entries: disabled
+Automatic eviction of collection cache: disabled
+JDBC batch size: 15
+JDBC batch updates for versioned data: enabled
+Scrollable result sets: enabled
+Wrap result sets: disabled
+JDBC3 getGeneratedKeys(): enabled
+JDBC result set fetch size: null
+Connection release mode: AFTER_TRANSACTION
+Generate SQL with comments: disabled
+Session factory constructed with filter configurations : {}
+Instantiating session factory with properties: {gopherProxySet=false, awt.toolkit=sun.lwawt.macosx.LWCToolkit, hibernate.connection.characterEncoding=utf8, dialect=org.hibernate.dialect.MySQLDialect, file.encoding.pkg=sun.io, java.specification.version=1.8, sun.cpu.isalist=, sun.jnu.encoding=UTF-8, hibernate.dialect=org.hibernate.dialect.MySQLDialect, java.class.path=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/lib/tools.jar:/Users/artur/Desktop/JavaSchoolProject/BackJavaSchool/target/classes:/Users/artur/.m2/repository/org/springframework/security/spring-security-web/5.1.4.RELEASE/spring-security-web-5.1.4.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/security/spring-security-core/5.1.4.RELEASE/spring-security-core-5.1.4.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-aop/5.1.5.RELEASE/spring-aop-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-beans/5.1.5.RELEASE/spring-beans-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-context/5.1.5.RELEASE/spring-context-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-core/5.1.5.RELEASE/spring-core-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-jcl/5.1.5.RELEASE/spring-jcl-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-expression/5.1.5.RELEASE/spring-expression-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-web/5.1.5.RELEASE/spring-web-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/security/spring-security-config/5.1.4.RELEASE/spring-security-config-5.1.4.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/security/spring-security-taglibs/5.1.4.RELEASE/spring-security-taglibs-5.1.4.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/security/spring-security-acl/5.1.4.RELEASE/spring-security-acl-5.1.4.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-jdbc/5.1.5.RELEASE/spring-jdbc-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/org/springframework/spring-tx/5.1.5.RELEASE/spring-tx-5.1.5.RELEASE.jar:/Users/artur/.m2/repository/io/jsonwebtoken/jjwt/0.9.1/jjwt-0.9.1.jar:/Users/artur/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3.jar:/Users/artur/.m2/repository/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2.jar:/Users/artur/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0.jar:/Users/artur/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0.jar:/Users/artur/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0.jar:/Users/artur/.m2/repository/mysql/mysql-connector-java/8.0.13/mysql-connector-java-8.0.13.jar:/Users/artur/.m2/repository/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar:/Users/artur/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar:/Users/artur/.m2/repository/org/hibernate/hibernate-core/5.2.6.Final/hibernate-core-5.2.6.Final.jar:/Users/artur/.m2/repository/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar:/Users/artur/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar:/Users/artur/.m2/repository/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar:/Users/artur/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/Users/artur/.m2/repository/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar:/Users/artur/.m2/repository/org/jboss/jandex/2.0.3.Final/jandex-2.0.3.Final.jar:/Users/artur/.m2/repository/com/fasterxml/classmate/1.3.0/classmate-1.3.0.jar:/Users/artur/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/Users/artur/.m2/repository/org/hibernate/common/hibernate-commons-annotations/5.0.1.Final/hibernate-commons-annotations-5.0.1.Final.jar:/Users/artur/.m2/repository/javax/enterprise/cdi-api/1.1/cdi-api-1.1.jar:/Users/artur/.m2/repository/javax/el/el-api/2.2/el-api-2.2.jar:/Users/artur/.m2/repository/org/jboss/spec/javax/interceptor/jboss-interceptors-api_1.1_spec/1.0.0.Beta1/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar:/Users/artur/.m2/repository/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar:/Users/artur/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/Users/artur/.m2/repository/org/springframework/spring-webmvc/4.3.3.RELEASE/spring-webmvc-4.3.3.RELEASE.jar:/Users/artur/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/Users/artur/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar, java.vm.vendor=Oracle Corporation, sun.arch.data.model=64, java.vendor.url=http://java.oracle.com/, user.timezone=, os.name=Mac OS X, java.vm.specification.version=1.8, user.country=RU, sun.java.launcher=SUN_STANDARD, sun.boot.library.path=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib, sun.java.command=Main, http.nonProxyHosts=local|*.local|169.254/16|*.169.254/16, sun.cpu.endian=little, user.home=/Users/artur, user.language=ru, java.specification.vendor=Oracle Corporation, java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre, file.separator=/, line.separator=
+, java.vm.specification.vendor=Oracle Corporation, java.specification.name=Java Platform API Specification, java.awt.graphicsenv=sun.awt.CGraphicsEnvironment, hibernate.connection.CharSet=utf8, sun.boot.class.path=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/classes, hibernate.connection.useUnicode=true, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, ftp.nonProxyHosts=local|*.local|169.254/16|*.169.254/16, java.runtime.version=1.8.0_231-b11, user.name=artur, path.separator=:, hibernate.connection.username=root, os.version=10.16, java.endorsed.dirs=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/endorsed, java.runtime.name=Java(TM) SE Runtime Environment, hibernate.connection.url=jdbc:mysql://localhost:3306/JavaSchoolDB?serverTimezone=Europe/Moscow, file.encoding=UTF-8, java.vm.name=Java HotSpot(TM) 64-Bit Server VM, hibernate.show_sql=true, hibernate.current_session_context_class=thread, show_sql=true, hibernate.connection.driver_class=com.mysql.cj.jdbc.Driver, java.vendor.url.bug=http://bugreport.sun.com/bugreport/, java.io.tmpdir=/var/folders/p_/99jnlm4j28z510v4v8nlcqzr0000gn/T/, java.version=1.8.0_231, user.dir=/Users/artur/Desktop/JavaSchoolProject/BackJavaSchool, os.arch=x86_64, java.vm.specification.name=Java Virtual Machine Specification, hibernate.connection.password=****, java.awt.printerjob=sun.lwawt.macosx.CPrinterJob, sun.os.patch.level=unknown, hibernate.boot.CfgXmlAccessService.key=org.hibernate.boot.cfgxml.spi.LoadedConfig@7e8dcdaa, java.library.path=/Users/artur/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:., java.vm.info=mixed mode, java.vendor=Oracle Corporation, java.vm.version=25.231-b11, hibernate.bytecode.use_reflection_optimizer=false, java.ext.dirs=/Users/artur/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java, sun.io.unicode.encoding=UnicodeBig, java.class.version=52.0, socksNonProxyHosts=local|*.local|169.254/16|*.169.254/16}
+Skipping JACC integration as it was not enabled
+Instantiated session factory
+Not known whether passed class name [ru.javaSchoolProject.models.User] is safe
+No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : ru.javaSchoolProject.models.User
+Not known whether passed class name [ru.javaSchoolProject.models.User] is safe
+No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : ru.javaSchoolProject.models.User
+Static SQL for entity: ru.javaSchoolProject.models.User
+ Version select: select id from users where id =?
+ Snapshot select: select user_.id, user_.login as login2_0_, user_.password as password3_0_, user_.role as role4_0_ from users user_ where user_.id=?
+ Insert 0: insert into users (login, password, role, id) values (?, ?, ?, ?)
+ Update 0: update users set login=?, password=?, role=? where id=?
+ Delete 0: delete from users where id=?
+ Identity insert: insert into users (login, password, role) values (?, ?, ?)
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@46f699d5]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [NONE]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@25ddbbbb]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [READ]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@4ebea12c]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [UPGRADE]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@6256ac4f]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [UPGRADE_NOWAIT]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@7fcbe147]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [UPGRADE_SKIPLOCKED]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@743cb8e0]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [FORCE]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@2c1b9e4b]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [PESSIMISTIC_READ]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? lock in share mode
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@649725e3]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [PESSIMISTIC_WRITE]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@4c168660]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [PESSIMISTIC_FORCE_INCREMENT]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=? for update
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@fd0e5b6]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [OPTIMISTIC]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@36b0fcd5]
+Visiting attribute path : login
+Visiting attribute path : password
+Visiting attribute path : role
+Building LoadPlan...
+processing queryspace <gen:0>
+LoadPlan(entity=ru.javaSchoolProject.models.User)
+    - Returns
+       - EntityReturnImpl(entity=ru.javaSchoolProject.models.User, querySpaceUid=<gen:0>, path=ru.javaSchoolProject.models.User)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=ru.javaSchoolProject.models.User)
+          - SQL table alias mapping - user0_
+          - alias suffix - 0_
+          - suffixed key columns - {id1_0_0_}
+
+Static select for entity ru.javaSchoolProject.models.User [OPTIMISTIC_FORCE_INCREMENT]: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+Static select for action ACTION_MERGE on entity ru.javaSchoolProject.models.User: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+Static select for action ACTION_REFRESH on entity ru.javaSchoolProject.models.User: select user0_.id as id1_0_0_, user0_.login as login2_0_0_, user0_.password as password3_0_0_, user0_.role as role4_0_0_ from users user0_ where user0_.id=?
+No actions specified; doing nothing
+Checking 0 named HQL queries
+Checking 0 named SQL queries
+Initializing SessionFactoryRegistry : org.hibernate.internal.SessionFactoryRegistry@4a8a60bc
+Registering SessionFactory: d0e1acc6-6dc7-4bc8-921c-96ba0d9f23c9 (<unnamed>)
+Not binding SessionFactory to JNDI, no JNDI name configured
+Statistics initialized [enabled=false]
+QueryTranslatorFactory : org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory@3aee3976
+HHH000397: Using ASTQueryTranslatorFactory
+parse() - HQL: From ru.javaSchoolProject.models.User as user where user.login ='1'
+--- HQL AST ---
+ \-[QUERY] Node: 'query'
+    +-[SELECT_FROM] Node: 'SELECT_FROM'
+    |  \-[FROM] Node: 'From'
+    |     \-[RANGE] Node: 'RANGE'
+    |        +-[DOT] Node: '.'
+    |        |  +-[DOT] Node: '.'
+    |        |  |  +-[DOT] Node: '.'
+    |        |  |  |  +-[IDENT] Node: 'ru'
+    |        |  |  |  \-[IDENT] Node: 'javaSchoolProject'
+    |        |  |  \-[IDENT] Node: 'models'
+    |        |  \-[IDENT] Node: 'User'
+    |        \-[ALIAS] Node: 'user'
+    \-[WHERE] Node: 'where'
+       \-[EQ] Node: '='
+          +-[DOT] Node: '.'
+          |  +-[IDENT] Node: 'user'
+          |  \-[IDENT] Node: 'login'
+          \-[QUOTED_STRING] Node: ''1''
+
+throwQueryException() : no errors
+select << begin [level=1, statement=select]
+FromClause{level=1} : ru.javaSchoolProject.models.User (user) -> user0_
+Resolved : user -> user0_.id
+getDataType() : login -> org.hibernate.type.StringType@7f416310
+Resolved : user.login -> user0_.login
+select : finishing up [level=1, statement=select]
+processQuery() :  ( SELECT ( FromClause{level=1} users user0_ ) ( where ( = ( user0_.login user0_.id login ) '1' ) ) )
+Derived SELECT clause created.
+Using FROM fragment [users user0_]
+select >> end [level=1, statement=select]
+--- SQL AST ---
+ \-[SELECT] QueryNode: 'SELECT'  querySpaces (users)
+    +-[SELECT_CLAUSE] SelectClause: '{derived select clause}'
+    |  +-[SELECT_EXPR] SelectExpressionImpl: 'user0_.id as id1_0_' {FromElement{explicit,not a collection join,not a fetch join,fetch non-lazy properties,classAlias=user,role=null,tableName=users,tableAlias=user0_,origin=null,columns={,className=ru.javaSchoolProject.models.User}}}
+    |  \-[SQL_TOKEN] SqlFragment: 'user0_.login as login2_0_, user0_.password as password3_0_, user0_.role as role4_0_'
+    +-[FROM] FromClause: 'From' FromClause{level=1, fromElementCounter=1, fromElements=1, fromElementByClassAlias=[user], fromElementByTableAlias=[user0_], fromElementsByPath=[], collectionJoinFromElementsByPath=[], impliedElements=[]}
+    |  \-[FROM_FRAGMENT] FromElement: 'users user0_' FromElement{explicit,not a collection join,not a fetch join,fetch non-lazy properties,classAlias=user,role=null,tableName=users,tableAlias=user0_,origin=null,columns={,className=ru.javaSchoolProject.models.User}}
+    \-[WHERE] SqlNode: 'where'
+       \-[EQ] BinaryLogicOperatorNode: '='
+          +-[DOT] DotNode: 'user0_.login' {propertyName=login,dereferenceType=PRIMITIVE,getPropertyPath=login,path=user.login,tableAlias=user0_,className=ru.javaSchoolProject.models.User,classAlias=user}
+          |  +-[ALIAS_REF] IdentNode: 'user0_.id' {alias=user, className=ru.javaSchoolProject.models.User, tableAlias=user0_}
+          |  \-[IDENT] IdentNode: 'login' {originalText=login}
+          \-[QUOTED_STRING] LiteralNode: ''1''
+
+throwQueryException() : no errors
+HQL: From ru.javaSchoolProject.models.User as user where user.login ='1'
+SQL: select user0_.id as id1_0_, user0_.login as login2_0_, user0_.password as password3_0_, user0_.role as role4_0_ from users user0_ where user0_.login='1'
+throwQueryException() : no errors
+select user0_.id as id1_0_, user0_.login as login2_0_, user0_.password as password3_0_, user0_.role as role4_0_ from users user0_ where user0_.login='1'
+Initiating JDBC connection release from afterTransaction

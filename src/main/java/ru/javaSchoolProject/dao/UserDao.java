@@ -1,5 +1,7 @@
 package ru.javaSchoolProject.dao;
 
+import org.apache.log4j.Logger;
+import ru.javaSchoolProject.controllers.AuthController;
 import ru.javaSchoolProject.models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,6 +13,8 @@ import java.util.List;
 @Repository
 public class UserDao {
 
+    final static Logger logger = Logger.getLogger(AuthController.class.getName());
+
     public User findById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
     }
@@ -20,9 +24,11 @@ public class UserDao {
             List<User> users = (List<User>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User as user where user.login ='" + login + "'" + " and user.password = '" + password + "'").list();
             if(!users.isEmpty())
             {
+                logger.info("FOUND user \""+login+"\" in DB by Login and Password: SUCCESS");
                 return users.get(0);
             }
             else {
+                logger.info("NOT FOUND user \"" + login + "\" in DB by Login and Password: FAILURE");
                 return null;
             }
 
@@ -33,9 +39,11 @@ public class UserDao {
         List<User> users = (List<User>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User as user where user.login ='" + login + "'").list();
         if(!users.isEmpty())
         {
+            logger.info("FOUND user \""+login+"\" in DB by Login: SUCCESS");
             return users.get(0);
         }
         else {
+            logger.info("NOT FOUND user \"" + login + "\" in DB by Login: FAILURE");
             return null;
         }
 
@@ -47,10 +55,13 @@ public class UserDao {
             Transaction tx1 = session.beginTransaction();
             session.save(user);
             tx1.commit();
+            logger.info("SAVED user \""+user.getLogin()+"\"to DB: SUCCESS");
             return true;
         }
         catch (ConstraintViolationException e){ // when user with same login exists
-            System.out.println("from UserDao - save:"+e.getMessage());
+
+//            System.out.println("from UserDao - save:"+e.getMessage());
+            logger.info("NOT SAVED user \""+user.getLogin()+"\"to DB: FAILURE("+e.getMessage()+")");
             return false;
         }
 

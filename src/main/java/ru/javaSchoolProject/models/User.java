@@ -17,11 +17,11 @@ public class User implements Serializable {
         this.password = pas;
         this.role=role;
     }
-    public User(String log, String pas){
-        this.login=log;
-        this.password = pas;
-        this.role=Role.ROLE_CUSTOMER;
-    }
+//    public User(String log, String pas){
+//        this.login=log;
+//        this.password = pas;
+//        this.role=Role.ROLE_CUSTOMER;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
