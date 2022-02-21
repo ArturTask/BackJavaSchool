@@ -28,19 +28,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() //Отключает CSRF Protection, поскольку она не нужна для API
-                .httpBasic() //Базовая http аутентификация
+                .csrf().disable() //Disable CSRF Protection, not needed
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Not to save info about user's session, not needed for api
                 .and()
-                .sessionManagement().disable(); //не следует хранить информацию о сеансе для пользователей, поскольку это не нужно для API
+                .authorizeRequests()//
+                .antMatchers("/auth/*").permitAll() // Allow everyone to register and login
+                .antMatchers("/proba/*").hasAuthority("ADMIN")
+                .antMatchers("/user/*").hasAuthority("USER")
+                .anyRequest().authenticated()  // Other things only for authorized users
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
-        http.authorizeRequests()//
-                .antMatchers("/auth/*").permitAll() // Разрешаем всем регистрироваться и входить
-//                .antMatchers("/proba/*").hasRole("ADMIN");
-//                .antMatchers("/user/*").hasRole("USER")
-                .anyRequest().authenticated();  // Ограничение для всех остальных
-
-
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        ;
 
 
     }

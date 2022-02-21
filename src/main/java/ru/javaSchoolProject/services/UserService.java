@@ -74,7 +74,7 @@ public class UserService {
 
             if(existingUser==null){
 
-                usersDao.save(new User(login,passwordEncoder.encode(password),Role.ROLE_CUSTOMER)); //saving the CUSTOMER!
+                usersDao.save(new User(login,passwordEncoder.encode(password),Role.CUSTOMER)); //saving the CUSTOMER!
                 logger.info("REGISTER user \""+login+"\": SUCCESS");
                 return new RegDto("","ROLE_CUSTOMER");
             }

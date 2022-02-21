@@ -1,6 +1,13 @@
 package ru.javaSchoolProject.enums;
 
-public enum Role {
-    ROLE_ADMIN,
-    ROLE_CUSTOMER
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
+    ADMIN,
+    CUSTOMER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

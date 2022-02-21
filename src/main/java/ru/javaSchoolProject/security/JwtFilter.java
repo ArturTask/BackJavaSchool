@@ -34,7 +34,8 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-        if (token != null && jwtProvider.validateToken(token)) {
+//        System.out.println(token);
+        if (token != null && jwtProvider.validateToken(token)) {//if token is valid we register the user and give him role (authority)
             String userLogin = jwtProvider.getLoginFromToken(token);
             MyUserDetails myUserDetails = myUserDetailsService.loadUserByUsername(userLogin);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(myUserDetails, null, myUserDetails.getAuthorities());
@@ -43,20 +44,6 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-////        String token = jwtProvider.resolveToken(httpServletRequest);
-////        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-//
-//        String token = getTokenFromRequest(httpServletRequest);
-//        if (token != null && jwtProvider.validateToken(token)) {
-//            String userLogin = jwtProvider.getLoginFromToken(token);
-//            MyUserDetails myUserDetails = myUserDetailsService.loadUserByUsername(userLogin);
-//            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(myUserDetails, null, myUserDetails.getAuthorities());
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//        }
-//        filterChain.doFilter(httpServletRequest, httpServletResponse);
-//    }
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader(AUTHORIZATION);

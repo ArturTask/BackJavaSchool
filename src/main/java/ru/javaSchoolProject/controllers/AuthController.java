@@ -25,7 +25,6 @@ public class AuthController {
     final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
 
-
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String printHelloWorld(ModelMap modelMap){
         // return the name of the file to be loaded "hello_world.jsp"
