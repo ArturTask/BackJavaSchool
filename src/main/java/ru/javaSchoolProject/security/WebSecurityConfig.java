@@ -33,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()//
                 .antMatchers("/auth/*").permitAll() // Allow everyone to register and login
-                .antMatchers("/proba/*").hasAuthority("ADMIN")
-                .antMatchers("/user/*").hasAuthority("USER")
+                .antMatchers("/manage/*").permitAll() // Allow everyone to register and login
+//                .antMatchers("/user/*").hasAuthority("USER")
                 .anyRequest().authenticated()  // Other things only for authorized users
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

@@ -17,7 +17,8 @@
         <property name="hibernate.connection.useUnicode">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-<!--        <property name="hbm2ddl.auto">create</property>-->
+<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
+
 
 
 

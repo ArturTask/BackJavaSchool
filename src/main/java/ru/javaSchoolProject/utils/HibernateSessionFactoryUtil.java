@@ -1,7 +1,7 @@
 package ru.javaSchoolProject.utils;
 
 
-import ru.javaSchoolProject.models.User;
+import ru.javaSchoolProject.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -17,8 +17,12 @@ public class HibernateSessionFactoryUtil {
             if (sessionFactory == null) {
                 try {
                     Configuration configuration = new Configuration().configure();
+//                    configuration.addAnnotatedClass(User.class);
                     configuration.addAnnotatedClass(User.class);
-//                    configuration.addAnnotatedClass(Auto.class);
+                    configuration.addAnnotatedClass(Contract.class);
+                    configuration.addAnnotatedClass(ContractOptions.class);
+                    configuration.addAnnotatedClass(Options.class);
+                    configuration.addAnnotatedClass(Tariff.class);
                     StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                     sessionFactory = configuration.buildSessionFactory(builder.build());
 

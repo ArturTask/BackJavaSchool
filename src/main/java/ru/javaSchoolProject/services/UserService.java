@@ -11,6 +11,7 @@ import ru.javaSchoolProject.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.javaSchoolProject.security.JwtProvider;
 
 import java.util.List;
 
@@ -20,7 +21,9 @@ public class UserService {
 
     @Autowired
     private UserDao usersDao;
-//    private UserDao usersDao = new UserDao();
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
@@ -46,9 +49,9 @@ public class UserService {
 
     }
 
-    public LogInDto logUser(String token, String login, String password) throws SecurityException {
+    public LogInDto logUser (String login, String password) throws SecurityException {
 
-        //check if user with current login exists: returns null if not otherwise returns User object
+        //check if user with current login exists: returns null if not, otherwise returns User object
         User currentUser = findUserByLogin(login);
 
         if(currentUser==null){
@@ -58,6 +61,10 @@ public class UserService {
         else {
             if(passwordEncoder.matches(password,currentUser.getPassword())){
                 logger.info("LOGIN user \""+login+"\": SUCCESS");
+                String token = jwtProvider.generateToken(login); //generate token if password matches
+                currentUser.setToken(token);
+                updateUser(currentUser); // save token to our db!!! very important
+//                System.out.println(token);
                 return new LogInDto(token,Integer.toString(currentUser.getId()),currentUser.getRole().toString());
             }
         }

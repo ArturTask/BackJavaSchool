@@ -37,6 +37,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "token")
+    private String token;
+
     public int getId() {
         return id;
     }
@@ -51,5 +54,29 @@ public class User implements Serializable {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
