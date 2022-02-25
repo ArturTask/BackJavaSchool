@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().disable()
+                .cors().and()
                 .csrf().disable() //Disable CSRF Protection, not needed
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Not to save info about user's session, not needed for api
                 .and()
@@ -60,19 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedHeaders("x-auth-token","Authorization","Access-Control-Allow-Origin","Access-Control-Allow-Credentials")
-                        .exposedHeaders("x-auth-token","Authorization","Access-Control-Allow-Origin","Access-Control-Allow-Credentials")
-                        .allowCredentials(false).maxAge(3600);
-
-            }
-        };
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 
 
