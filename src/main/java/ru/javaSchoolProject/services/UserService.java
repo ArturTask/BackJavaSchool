@@ -6,6 +6,7 @@ import ru.javaSchoolProject.controllers.AuthController;
 import ru.javaSchoolProject.dao.UserDao;
 import ru.javaSchoolProject.dto.LogInDto;
 import ru.javaSchoolProject.dto.RegDto;
+import ru.javaSchoolProject.dto.UserDto;
 import ru.javaSchoolProject.enums.Role;
 import ru.javaSchoolProject.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.javaSchoolProject.security.JwtProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -101,8 +103,16 @@ public class UserService {
         usersDao.update(user);
     }
 
-    public List<User> findAllUsers() {
-        return usersDao.findAll();
+    public List<UserDto> findAllUsers() {
+        List<User> users =  usersDao.findAll();
+        List<UserDto> dtoUsers =  new ArrayList<>();
+        for (User u : users){
+            dtoUsers.add(UserDto.builder()
+                    .id(u.getId())
+                    .login(u.getLogin())
+                    .build());
+        }
+        return dtoUsers;
     }
 
 }

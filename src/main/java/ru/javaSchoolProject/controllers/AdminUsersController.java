@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.javaSchoolProject.dto.UserDto;
 import ru.javaSchoolProject.models.User;
 import ru.javaSchoolProject.security.JwtProvider;
 import ru.javaSchoolProject.services.UserService;
@@ -27,10 +28,12 @@ public class AdminUsersController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
+    public List<UserDto> getAllUsers(){
         logger.info("GET request: all users are taken from database");
         return userService.findAllUsers();
     }
+
+
 
 
 }

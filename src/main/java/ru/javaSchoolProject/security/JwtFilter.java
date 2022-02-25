@@ -2,6 +2,7 @@ package ru.javaSchoolProject.security;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 @Component
 @Log
+@Order(0)
 public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
@@ -34,7 +36,12 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-//        System.out.println(token);
+        System.out.println(token);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+//        System.out.println(httpServletRequest.getHeaderNames());
+        System.out.println("trying " + httpServletRequest.getHeader("Authorization"));
+        System.out.println("trying jwt " + httpServletRequest.getHeader("JWT"));
+        System.out.println(httpServletRequest.getHeader("user-agent"));
         if (token != null && jwtProvider.validateToken(token)) {//if token is valid we register the user and give him role (authority)
             String userLogin = jwtProvider.getLoginFromToken(token);
             MyUserDetails myUserDetails = myUserDetailsService.loadUserByUsername(userLogin);

@@ -8,7 +8,7 @@ import ru.javaSchoolProject.dto.OptionsDto;
 @RequestMapping("options")
 public class OptionsController {
 
-    @PostMapping("chenge_options_of_{id}") //for admin
+    @PostMapping("change_options_of_{id}") //for admin
     public OptionsDto changeTariffOptions(@PathVariable String id, OptionsDto optionsDto){
         return new OptionsDto();
     }

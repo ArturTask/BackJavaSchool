@@ -1,10 +1,13 @@
 package ru.javaSchoolProject.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "tariff")
+@Data
 public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
