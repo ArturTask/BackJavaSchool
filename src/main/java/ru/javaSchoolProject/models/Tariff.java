@@ -1,6 +1,7 @@
 package ru.javaSchoolProject.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +9,16 @@ import java.util.List;
 @Entity
 @Table(name = "tariff")
 @Data
+@NoArgsConstructor
 public class Tariff {
+
+    public Tariff(String title, int cost, String description, List<Options> options) {
+        this.title = title;
+        this.cost = cost;
+        this.description = description;
+        this.options = options;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,7 +27,7 @@ public class Tariff {
     private String title;
 
     @Column(name = "cost")
-    private int cost;
+    private double cost;
 
     @Column(name = "description")
     private String description;

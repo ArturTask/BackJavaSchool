@@ -21,9 +21,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()//
                 .antMatchers("/auth/*").permitAll() // Allow everyone to register and login
-//                .antMatchers("/manage/*").permitAll() // Allow everyone to register and login
+                .antMatchers("/manage/*").hasAuthority("ADMIN") // Allow everyone to register and login
 //                .antMatchers("/user/*").hasAuthority("USER")
                 .anyRequest().authenticated()  // Other things only for authorized users
                 .and()
@@ -62,9 +64,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","DELETE","POST"));
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+//
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+//        return source;
+//    }
 
 
 }

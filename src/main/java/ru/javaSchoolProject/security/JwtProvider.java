@@ -15,8 +15,8 @@ public class JwtProvider {
     @Value("TopSecretValue")
     private String jwtSecret;
 
-    @Value("3600000")
-    private long tokenDurabilityInMilliseconds = 3600000;
+    @Value("360000000")
+    private long tokenDurabilityInMilliseconds = 360000000;
 
     public String generateToken(String login) {
         //set token expiration time

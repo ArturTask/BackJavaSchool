@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,9 @@ public class TariffDto {
     private String title;
 
     private String description;
+
+    private String cost;
+
+    private List<OptionsDto> options;
 
 }

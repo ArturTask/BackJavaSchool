@@ -10,11 +10,6 @@ public class RegDto {
         this.role = role;
     }
 
-//    public RegDto(String token) {
-//        this.token = token;
-//        this.role = "ROLE_ADMIN";
-//    }
-
     private String token;
 
     private String role;

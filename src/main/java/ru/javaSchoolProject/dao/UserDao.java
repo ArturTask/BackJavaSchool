@@ -24,11 +24,11 @@ public class UserDao {
             List<User> users = (List<User>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User as user where user.login ='" + login + "'" + " and user.password = '" + password + "'").list();
             if(!users.isEmpty())
             {
-                logger.info("FOUND user \""+login+"\" in DB by Login and Password: SUCCESS");
+                //logger.info("FOUND user \""+login+"\" in DB by Login and Password: SUCCESS");
                 return users.get(0);
             }
             else {
-                logger.info("NOT FOUND user \"" + login + "\" in DB by Login and Password: FAILURE");
+                //logger.info("NOT FOUND user \"" + login + "\" in DB by Login and Password: FAILURE");
                 return null;
             }
 
@@ -39,11 +39,11 @@ public class UserDao {
         List<User> users = (List<User>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User as user where user.login ='" + login + "'").list();
         if(!users.isEmpty())
         {
-            logger.info("FOUND user \""+login+"\" in DB by Login: SUCCESS");
+            //logger.info("FOUND user \""+login+"\" in DB by Login: SUCCESS");
             return users.get(0);
         }
         else {
-            logger.info("NOT FOUND user \"" + login + "\" in DB by Login: FAILURE");
+            //logger.info("NOT FOUND user \"" + login + "\" in DB by Login: FAILURE");
             return null;
         }
 
@@ -55,13 +55,13 @@ public class UserDao {
             Transaction tx1 = session.beginTransaction();
             session.save(user);
             tx1.commit();
-            logger.info("SAVED user \""+user.getLogin()+"\"to DB: SUCCESS");
+            //logger.info("SAVED user \""+user.getLogin()+"\"to DB: SUCCESS");
             return true;
         }
         catch (ConstraintViolationException e){ // when user with same login exists
 
 //            System.out.println("from UserDao - save:"+e.getMessage());
-            logger.info("NOT SAVED user \""+user.getLogin()+"\"to DB: FAILURE("+e.getMessage()+")");
+            //logger.info("NOT SAVED user \""+user.getLogin()+"\"to DB: FAILURE("+e.getMessage()+")");
             return false;
         }
 

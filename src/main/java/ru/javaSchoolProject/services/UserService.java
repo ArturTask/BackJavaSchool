@@ -46,7 +46,7 @@ public class UserService {
 
     public User findUserByLogin(String login) {
         // If not found returns null
-        logger.info("TRYING TO find user "+login+" by their's login");
+        //logger.info("TRYING TO find user "+login+" by their's login");
         return usersDao.findByLogin(login);
 
     }
@@ -62,7 +62,7 @@ public class UserService {
         }
         else {
             if(passwordEncoder.matches(password,currentUser.getPassword())){
-                logger.info("LOGIN user \""+login+"\": SUCCESS");
+                //logger.info("LOGIN user \""+login+"\": SUCCESS");
                 String token = jwtProvider.generateToken(login); //generate token if password matches
                 currentUser.setToken(token);
                 updateUser(currentUser); // save token to our db!!! very important
@@ -70,7 +70,7 @@ public class UserService {
                 return new LogInDto(token,Integer.toString(currentUser.getId()),currentUser.getRole().toString());
             }
         }
-        logger.info("CAN'T LOGIN user \""+login+"\" Incorrect password: FAILURE");
+        //logger.info("CAN'T LOGIN user \""+login+"\" Incorrect password: FAILURE");
         return new LogInDto("Invalid Password","","");
 
 
@@ -84,11 +84,11 @@ public class UserService {
             if(existingUser==null){
 
                 usersDao.save(new User(login,passwordEncoder.encode(password),Role.CUSTOMER)); //saving the CUSTOMER!
-                logger.info("REGISTER user \""+login+"\": SUCCESS");
+                //logger.info("REGISTER user \""+login+"\": SUCCESS");
                 return new RegDto("","ROLE_CUSTOMER");
             }
             else { //User with this login already exists
-                logger.warn("CAN'T REGISTER new user \""+login +"\" already exists, must be unique: FAILURE");
+                //logger.warn("CAN'T REGISTER new user \""+login +"\" already exists, must be unique: FAILURE");
                 return new RegDto("User with this login already exists","");
             }
 
@@ -107,10 +107,12 @@ public class UserService {
         List<User> users =  usersDao.findAll();
         List<UserDto> dtoUsers =  new ArrayList<>();
         for (User u : users){
-            dtoUsers.add(UserDto.builder()
-                    .id(u.getId())
-                    .login(u.getLogin())
-                    .build());
+            if(u.getRole()==Role.CUSTOMER) {
+                dtoUsers.add(UserDto.builder()
+                        .id(u.getId())
+                        .login(u.getLogin())
+                        .build());
+            }
         }
         return dtoUsers;
     }
