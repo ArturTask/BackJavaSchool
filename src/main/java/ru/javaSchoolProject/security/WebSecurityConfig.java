@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manage/*").hasAuthority("ADMIN") // Allow only admins to manage users
                 .antMatchers("/tariff/add_new").hasAuthority("ADMIN")
                 .antMatchers("/tariff/delete_*").hasAuthority("ADMIN")
+                .antMatchers("/tariff/get_all_tariffs").hasAuthority("ADMIN")
 //                .antMatchers("/user/*").hasAuthority("USER")
                 .anyRequest().authenticated()  // Other things only for authorized users
                 .and()

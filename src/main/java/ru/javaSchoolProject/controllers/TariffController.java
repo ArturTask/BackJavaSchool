@@ -41,10 +41,16 @@ public class TariffController {
         return tariffService.updateTariff(tariffDto);
     }
 
-    @GetMapping("get_all_tariffs")
+    @GetMapping("get_all_tariffs") //for admin
     public List<TariffDto> getAllTariffs(){
         logger.info("GET ALL TARIFFS request");
         return tariffService.getAllTariffs();
+    }
+
+    @GetMapping("get_all_active_tariffs") //for customer
+    public List<TariffDto> getAllActiveTariffs(){
+        logger.info("GET ALL ACTIVE TARIFFS request");
+        return tariffService.getAllActiveTariffs();
     }
 
     @DeleteMapping("delete_{id}") //for admin

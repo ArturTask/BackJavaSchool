@@ -115,7 +115,7 @@ public class TariffService {
         }
     }
 
-    public List<TariffDto> getAllTariffs(){
+    public List<TariffDto> getAllTariffs(){ //for admin
         List<Tariff> tariffs = tariffDao.findAll();
         List<TariffDto> dtoTariffs = new ArrayList<>();
 
@@ -126,6 +126,23 @@ public class TariffService {
                     .description(tariff.getDescription())
                     .isActive(tariff.isActive())
                     .build());
+        }
+        return dtoTariffs;
+    }
+
+    public List<TariffDto> getAllActiveTariffs(){ //for customer
+        List<Tariff> tariffs = tariffDao.findAll();
+        List<TariffDto> dtoTariffs = new ArrayList<>();
+
+        for(Tariff tariff : tariffs){
+            if(tariff.isActive()) {
+                dtoTariffs.add(TariffDto.builder()
+                        .id(tariff.getId())
+                        .title(tariff.getTitle())
+                        .description(tariff.getDescription())
+                        .isActive(tariff.isActive())
+                        .build());
+            }
         }
         return dtoTariffs;
     }
@@ -190,7 +207,7 @@ public class TariffService {
         if(tariffDto.getDescription()==null || tariffDto.getDescription().equals("") || tariffDto.getTitle()==null || tariffDto.getTitle().equals("")){
             return false;
         }
-        if(tariffDto.getOptions()!=null || !checkOptions(tariffDto.getOptions())){
+        if(!checkOptions(tariffDto.getOptions())){
             return false;
         }
         if(!checkCost(tariffDto.getCost())){
@@ -204,7 +221,7 @@ public class TariffService {
             if(opDto.getName()==null || opDto.getName().equals("") || opDto.getOptionType()==null || opDto.getOptionType().equals("")){
                 return false;
             }
-            if(checkCost(opDto.getCost())){
+            if(!checkCost(opDto.getCost())){
                 return false;
             }
         }
