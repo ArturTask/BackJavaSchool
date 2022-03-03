@@ -46,7 +46,6 @@ public class UserService {
 
     public User findUserByLogin(String login) {
         // If not found returns null
-        //logger.info("TRYING TO find user "+login+" by their's login");
         return usersDao.findByLogin(login);
 
     }

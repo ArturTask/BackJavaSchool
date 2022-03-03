@@ -17,6 +17,8 @@ public class OptionsDto {
 
     private String optionType;
 
+    private String cost;
+
     private String tariffId;
 
 }

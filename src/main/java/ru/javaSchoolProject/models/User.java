@@ -13,15 +13,12 @@ public class User implements Serializable {
     public User(){
     }
     public User(String log, String pas, Role role){
-        this.login=log;
+        this.login = log;
         this.password = pas;
-        this.role=role;
+        this.role = role;
+        this.isBlocked = false;
+        this.isBlockedByAdmin = false;
     }
-//    public User(String log, String pas){
-//        this.login=log;
-//        this.password = pas;
-//        this.role=Role.ROLE_CUSTOMER;
-//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,43 +37,10 @@ public class User implements Serializable {
     @Column(name = "token")
     private String token;
 
-    public int getId() {
-        return id;
-    }
+    @Column(name = "is_blocked")// default false
+    private boolean isBlocked;
 
-    public String getLogin() {
-        return login;
-    }
+    @Column(name = "is_blocked_by_admin")// default false
+    private boolean isBlockedByAdmin;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

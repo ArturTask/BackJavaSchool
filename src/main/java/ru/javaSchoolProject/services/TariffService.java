@@ -34,12 +34,13 @@ public class TariffService {
             List<Options> options = new ArrayList<>();
             Tariff currentTariff = new Tariff();
             for (OptionsDto opDto : optionsDto) {
-                options.add(new Options(opDto.getName(), OptionType.valueOf(opDto.getOptionType()), currentTariff));
+                options.add(new Options(opDto.getName(), OptionType.valueOf(opDto.getOptionType()),Double.parseDouble(opDto.getCost()) ,currentTariff));
             }
             currentTariff.setTitle(tariffDto.getTitle());
             currentTariff.setDescription(tariffDto.getDescription());
             currentTariff.setCost(Double.parseDouble(tariffDto.getCost()));
             currentTariff.setOptions(options);
+            currentTariff.setActive(true);
             if (tariffDao.addTariff(currentTariff)) { //saved to db
                 return new TariffAnswerDto("OK");
             } else { // could not save
@@ -47,7 +48,7 @@ public class TariffService {
             }
         }
         else { //invalid
-            logger.warn("Invalid Tariff data");
+            logger.warn("CANT ADD TARIFF: Invalid Tariff data");
             return new TariffAnswerDto("Invalid data from frontend");
         }
     }
@@ -63,22 +64,23 @@ public class TariffService {
                 tariffDto.setTitle(currentTariff.getTitle());
                 tariffDto.setDescription(currentTariff.getDescription());
                 tariffDto.setCost(String.valueOf(currentTariff.getCost()));
+                tariffDto.setActive(currentTariff.isActive());
                 //options
                 List<Options> currentOptions = currentTariff.getOptions();
                 List<OptionsDto> optionsDtos = new ArrayList<>();
                 for(Options option: currentOptions){
-                    optionsDtos.add(new OptionsDto(String.valueOf(option.getId()),option.getName(),option.getOptionType().toString(),String.valueOf(option.getTariff().getId())));
+                    optionsDtos.add(new OptionsDto(String.valueOf(option.getId()),option.getName(),option.getOptionType().toString(),String.valueOf(option.getCost()),String.valueOf(option.getTariff().getId())));
                 }
                 tariffDto.setOptions(optionsDtos);
                 return tariffDto;
             }
             else {// if currentTariff == null
-                logger.warn("Tariff not found");
+                logger.warn("NOT FOUND: Tariff not found");
                 return new TariffDto();
             }
         }
         else { //invalid id
-            logger.warn("Invalid tariff id");
+            logger.warn("NOT FOUND: Invalid tariff id");
             return new TariffDto();
         }
     }
@@ -94,22 +96,21 @@ public class TariffService {
                 currentTariff.setDescription(tariffDto.getDescription());
                 currentTariff.setCost(Double.parseDouble(tariffDto.getCost()));
                 if(tariffDao.updateTariff(currentTariff)){
-                    logger.info("YEsSSSS");
+                    logger.info("UPDATE TARIFF: success");
                     return new TariffAnswerDto("OK");
                 }
                 else {
-                    logger.warn("Error");
+                    logger.warn("CANT UPDATE TARIFF: Error");
                     return new TariffAnswerDto("Error");
                 }
-//                return new TariffAnswerDto();
             }
             else {//incorrect tariff id
-                logger.warn("Invalid id");
+                logger.warn("CANT UPDATE TARIFF: Invalid id");
                 return new TariffAnswerDto("Invalid id");
             }
         }
         else {//invalid tariffDto
-            logger.warn("Invalid data");
+            logger.warn("CANT UPDATE TARIFF: Invalid data");
             return new TariffAnswerDto("Invalid Tariff data");
         }
     }
@@ -123,6 +124,7 @@ public class TariffService {
                     .id(tariff.getId())
                     .title(tariff.getTitle())
                     .description(tariff.getDescription())
+                    .isActive(tariff.isActive())
                     .build());
         }
         return dtoTariffs;
@@ -133,16 +135,17 @@ public class TariffService {
         if(checkTariffId(id)) {
             Tariff currentTariff = tariffDao.findTariffById(Integer.parseInt(id));
             if (currentTariff != null) {
-                tariffDao.deleteTariffById(currentTariff);
-                logger.info("Successfully Deleted Tariff id = " + id);
+                currentTariff.setActive(!currentTariff.isActive());
+                tariffDao.updateTariff(currentTariff);
+                logger.info("DELETE: Successfully Deleted Tariff id = " + id);
             } else {
-                logger.warn("Tariff not found");
+                logger.warn("CANT DELETE: Tariff not found");
                 return new TariffAnswerDto("Can't delete Tariff id = " + id + ", tariff with that id does not exist");
             }
             return new TariffAnswerDto("Successfuly deleted Tariff id = " + id);
         }
         else {
-            logger.warn("Invalid Tariff id");
+            logger.warn("CANT DELETE: Invalid Tariff id");
             return new TariffAnswerDto("Can't delete Tariff id = " + id + ", tariff with that id does not exist");
         }
     }
@@ -172,10 +175,10 @@ public class TariffService {
 
         for (OptionsDto opDto : optionsDto) {//parse options from frontend
             if(Integer.parseInt(opDto.getId())>0){
-                newOptions.add(new Options(Integer.parseInt(opDto.getId()),opDto.getName(), OptionType.valueOf(opDto.getOptionType()), tariffEntity));
+                newOptions.add(new Options(Integer.parseInt(opDto.getId()),opDto.getName(), OptionType.valueOf(opDto.getOptionType()), Double.parseDouble(opDto.getCost()) , tariffEntity));
             }
             else {
-                newOptions.add(new Options(opDto.getName(), OptionType.valueOf(opDto.getOptionType()), tariffEntity));
+                newOptions.add(new Options(opDto.getName(), OptionType.valueOf(opDto.getOptionType()), Double.parseDouble(opDto.getCost()), tariffEntity));
             }
         }
         tariffEntity.setOptions(newOptions);
@@ -187,7 +190,10 @@ public class TariffService {
         if(tariffDto.getDescription()==null || tariffDto.getDescription().equals("") || tariffDto.getTitle()==null || tariffDto.getTitle().equals("")){
             return false;
         }
-        if(!checkOptions(tariffDto.getOptions())){
+        if(tariffDto.getOptions()!=null || !checkOptions(tariffDto.getOptions())){
+            return false;
+        }
+        if(!checkCost(tariffDto.getCost())){
             return false;
         }
         return true;
@@ -198,16 +204,35 @@ public class TariffService {
             if(opDto.getName()==null || opDto.getName().equals("") || opDto.getOptionType()==null || opDto.getOptionType().equals("")){
                 return false;
             }
+            if(checkCost(opDto.getCost())){
+                return false;
+            }
         }
         return  true;
     }
 
     private boolean checkTariffId(String id){
-        if(id!=null || !id.equals("")){
+        if(id!=null && !id.equals("")){
             try{
                 Integer.parseInt(id);
             }
             catch (NumberFormatException e){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkCost(String cost){
+        if(cost!=null&&!cost.equals("")){
+            try{
+                Double.parseDouble(cost);
+            }
+            catch (NumberFormatException e){
+                return false;
+            }
+            if(Double.parseDouble(cost)<0){
                 return false;
             }
             return true;

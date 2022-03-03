@@ -18,12 +18,6 @@ import java.util.List;
 public class AdminUsersController {
     final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
-//    @Autowired
-//    private UserService userService;
-//
-//    @Autowired
-//    private JwtProvider jwtProvider;
-
     @Autowired
     private UserService userService;
 

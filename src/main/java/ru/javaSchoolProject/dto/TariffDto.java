@@ -21,6 +21,8 @@ public class TariffDto {
 
     private String cost;
 
+    private boolean isActive;
+
     private List<OptionsDto> options;
 
 }
