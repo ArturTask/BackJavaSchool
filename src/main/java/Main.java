@@ -1,7 +1,10 @@
+import ru.javaSchoolProject.dao.ContractDao;
 import ru.javaSchoolProject.dao.OptionsDao;
 import ru.javaSchoolProject.dao.TariffDao;
+import ru.javaSchoolProject.dao.UserDao;
 import ru.javaSchoolProject.enums.OptionType;
 import ru.javaSchoolProject.enums.Role;
+import ru.javaSchoolProject.models.Contract;
 import ru.javaSchoolProject.models.Options;
 import ru.javaSchoolProject.models.Tariff;
 import ru.javaSchoolProject.models.User;
@@ -11,11 +14,16 @@ import sun.jvm.hotspot.oops.TypeArray;
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
     private static TariffDao tariffDao = new TariffDao();
     private static OptionsDao optionsDao = new OptionsDao();
+    private static UserDao userDao = new UserDao();
+    private static ContractDao contractDao = new ContractDao();
+
+
     public static void main(String[] args) {
         /* to delete tariff I need to find it first
         */
@@ -46,6 +54,33 @@ public class Main {
 
         */
 
+        User user = new User("log","1",Role.ADMIN);
+        userDao.save(user);
+        List<Options> options = new ArrayList<>();
+
+        Tariff tariff = new Tariff();
+        options.add(new Options("da",OptionType.INTERNET,1D,tariff));
+        options.add(new Options("net",OptionType.INTERNET,1D,tariff));
+
+        tariff.setTitle("tariff");
+        tariff.setCost(1d);
+        tariff.setDescription("ddd");
+        tariff.setOptions(options);
+
+        tariffDao.addTariff(tariff);
+
+
+        List<Options> updatedOptions = Collections.singletonList(tariffDao.findTariffById(1).getOptions().get(0));
+
+//        Contract contract= new Contract(1,87770011098L,user, updatedOptions,tariff);
+
+//        contractDao.save(contract);
+
+//        Contract contract2= new Contract(2,87770011098L,user, updatedOptions,tariff);
+
+//        contractDao.save(contract2);
+
+        optionsDao.deleteOptionById(1);
 
 
 

@@ -1,8 +1,24 @@
 package ru.javaSchoolProject.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Builder
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
 public class ContractDto {
 
-    private int userId;
+    private String userId;
 
-    private int tariffId;
+    private String tariffId;
+
+    private String phoneNumber;
+
+    private List<OptionsDto> contractOptions;
+
 }

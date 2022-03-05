@@ -140,7 +140,7 @@ public class TariffService {
                         .id(tariff.getId())
                         .title(tariff.getTitle())
                         .description(tariff.getDescription())
-                        .isActive(tariff.isActive())
+                        .cost(String.valueOf(tariff.getCost()))
                         .build());
             }
         }
