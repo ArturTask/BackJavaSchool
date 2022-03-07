@@ -53,24 +53,24 @@ public class Main {
         tariffDao.updateTariff(oldTariff); //update
 
         */
-
-        User user = new User("log","1",Role.ADMIN);
-        userDao.save(user);
-        List<Options> options = new ArrayList<>();
-
-        Tariff tariff = new Tariff();
-        options.add(new Options("da",OptionType.INTERNET,1D,tariff));
-        options.add(new Options("net",OptionType.INTERNET,1D,tariff));
-
-        tariff.setTitle("tariff");
-        tariff.setCost(1d);
-        tariff.setDescription("ddd");
-        tariff.setOptions(options);
-
-        tariffDao.addTariff(tariff);
-
-
-        List<Options> updatedOptions = Collections.singletonList(tariffDao.findTariffById(1).getOptions().get(0));
+//
+//        User user = new User("log","1",Role.ADMIN);
+//        userDao.save(user);
+//        List<Options> options = new ArrayList<>();
+//
+//        Tariff tariff = new Tariff();
+//        options.add(new Options("da",OptionType.INTERNET,1D,tariff));
+//        options.add(new Options("net",OptionType.INTERNET,1D,tariff));
+//
+//        tariff.setTitle("tariff");
+//        tariff.setCost(1d);
+//        tariff.setDescription("ddd");
+//        tariff.setOptions(options);
+//
+//        tariffDao.addTariff(tariff);
+//
+//
+//        List<Options> updatedOptions = Collections.singletonList(tariffDao.findTariffById(1).getOptions().get(0));
 
 //        Contract contract= new Contract(1,87770011098L,user, updatedOptions,tariff);
 
@@ -80,8 +80,9 @@ public class Main {
 
 //        contractDao.save(contract2);
 
-        optionsDao.deleteOptionById(1);
+//        optionsDao.deleteOptionById(1);
 
+//        contractDao.deleteContract(6);
 
 
 

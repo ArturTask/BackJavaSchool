@@ -21,13 +21,6 @@ public class AuthController {
 
     final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
-
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String printHelloWorld(ModelMap modelMap){
-//        logger.debug("Post req from ");
-        return "hello_world";
-    }
-
     @PostMapping("/log_in")
     public LogInDto postLogUser(@RequestBody UserDto user){
         logger.info("LOGIN POST request(/logIn) from user " + user.getLogin());

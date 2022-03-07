@@ -7,10 +7,7 @@ import ru.javaSchoolProject.dao.ContractDao;
 import ru.javaSchoolProject.dao.OptionsDao;
 import ru.javaSchoolProject.dao.TariffDao;
 import ru.javaSchoolProject.dao.UserDao;
-import ru.javaSchoolProject.dto.ContractAnswerDto;
-import ru.javaSchoolProject.dto.ContractDto;
-import ru.javaSchoolProject.dto.OptionsDto;
-import ru.javaSchoolProject.dto.TariffDto;
+import ru.javaSchoolProject.dto.*;
 import ru.javaSchoolProject.enums.OptionType;
 import ru.javaSchoolProject.models.Contract;
 import ru.javaSchoolProject.models.ContractOptions;
@@ -83,6 +80,108 @@ public class ContractService {
         else { //invalid contractDto data
             return new ContractAnswerDto("Invalid contract data(wrong phone number or user/tariff id)");
         }
+    }
+
+    public FullContractDto getContract(ContractIdAndNumberDto contractIdAndNumberDto){
+        try{ //easy check
+            Integer.parseInt(contractIdAndNumberDto.getContractId());
+            Long.parseLong(contractIdAndNumberDto.getPhoneNumber());
+        }
+        catch (NumberFormatException e){//return null
+            return new FullContractDto();
+        }
+
+        //dao contract
+        Contract currentContract = contractDao.getContractById(Integer.parseInt(contractIdAndNumberDto.getContractId()));
+        //contract not found
+        if(currentContract==null){
+            return new FullContractDto();
+        }
+        //check if number belongs to that contract
+        if(currentContract.getPhoneNumber()!=Long.parseLong(contractIdAndNumberDto.getPhoneNumber())){ //wrong number
+            return new FullContractDto();
+        }
+
+        //parse contractOptions to optionDtos
+        List<OptionsDto> foundContractOptions = new ArrayList<>();
+        if(currentContract.getContractOptions()!=null){
+            for (ContractOptions op: currentContract.getContractOptions()) {
+                OptionsDto foundOption = new OptionsDto();
+                foundOption.setId(String.valueOf(op.getId()));
+                foundOption.setName(op.getName());
+                foundOption.setOptionType(String.valueOf(op.getOptionType()));
+                foundOption.setCost(String.valueOf(op.getCost()));
+
+                foundContractOptions.add(foundOption);
+            }
+        }
+
+        //parse options of tariff in contract to optionsDto (all options of tariff)
+        Tariff currentTariff = currentContract.getTariff();
+        List<OptionsDto> foundTariffOptions = new ArrayList<>();
+        if(currentTariff.getOptions()!=null){
+            for (Options op:currentContract.getTariff().getOptions()) {
+                OptionsDto foundOption = new OptionsDto();
+                foundOption.setId(String.valueOf(op.getId()));
+                foundOption.setName(op.getName());
+                foundOption.setOptionType(String.valueOf(op.getOptionType()));
+                foundOption.setCost(String.valueOf(op.getCost()));
+
+                foundTariffOptions.add(foundOption);
+            }
+        }
+
+        //parse tariff to tariffDto
+        TariffDto tariffDto = new TariffDto();
+        tariffDto.setId(currentTariff.getId());
+        tariffDto.setTitle(currentTariff.getTitle());
+        tariffDto.setDescription(currentTariff.getDescription());
+        tariffDto.setOptions(foundTariffOptions);
+        tariffDto.setCost(String.valueOf(currentTariff.getCost()));
+        tariffDto.setActive(currentTariff.isActive());
+
+        //make dto response contract
+        FullContractDto foundContract = new FullContractDto();
+        foundContract.setId(String.valueOf(currentContract.getId()));
+        foundContract.setPhoneNumber(String.valueOf(currentContract.getPhoneNumber()));
+        foundContract.setUserId(String.valueOf(currentContract.getUser().getId()));
+
+        foundContract.setContractOptions(foundContractOptions);
+        foundContract.setTariffDto(tariffDto);
+
+        return foundContract;
+
+    }
+
+    public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
+        try{
+            Integer.parseInt(userId);
+        }catch (NumberFormatException e){// cant parse userId
+            return new ArrayList<>();
+        }
+        //get contract info by user id
+        List<Contract> currentContracts = contractDao.getContractsOfUser(Integer.parseInt(userId));
+        //initialize dto response entity
+        List<ContractIdAndNumberDto> foundContractIdAndNumberDtoList = new ArrayList<>();
+
+        if(currentContracts!=null) {
+            for (Contract c : currentContracts) {
+                foundContractIdAndNumberDtoList.add(new ContractIdAndNumberDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber())));
+            }
+        }
+        return foundContractIdAndNumberDtoList;
+    }
+
+    public ContractAnswerDto deleteContract(String id){
+        try{ //easy check
+            Integer.parseInt(id);
+        }catch (NumberFormatException e){
+            return new ContractAnswerDto("Invalid id");
+        }
+        if(!contractDao.deleteContract(Integer.parseInt(id))){
+            return new ContractAnswerDto("Cant delete contract from database");
+        }
+        return new ContractAnswerDto("Delete success");
     }
 
 

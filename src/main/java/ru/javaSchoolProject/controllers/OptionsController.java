@@ -16,7 +16,6 @@ public class OptionsController {
 
     @DeleteMapping("delete_option")
     public OptionsDto deleteOption(@RequestBody OptionsDto optionsDto){
-
         return new OptionsDto();
     }
 
