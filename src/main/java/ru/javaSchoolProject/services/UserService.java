@@ -4,9 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.javaSchoolProject.controllers.AuthController;
 import ru.javaSchoolProject.dao.UserDao;
-import ru.javaSchoolProject.dto.LogInDto;
-import ru.javaSchoolProject.dto.RegDto;
-import ru.javaSchoolProject.dto.UserDto;
+import ru.javaSchoolProject.dto.*;
 import ru.javaSchoolProject.enums.Role;
 import ru.javaSchoolProject.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +55,7 @@ public class UserService {
 
         if(currentUser==null){
             logger.warn("CAN'T LOGIN user \""+login +"\" login is not registered: FAILURE");
-            return new LogInDto("Invalid username","","");
+            return new LogInDto(); //invalid username
         }
         else {
             if(passwordEncoder.matches(password,currentUser.getPassword())){
@@ -65,12 +63,11 @@ public class UserService {
                 String token = jwtProvider.generateToken(login); //generate token if password matches
                 currentUser.setToken(token);
                 updateUser(currentUser); // save token to our db!!! very important
-//                System.out.println(token);
                 return new LogInDto(token,Integer.toString(currentUser.getId()),currentUser.getRole().toString());
             }
+            //logger.info("CAN'T LOGIN user \""+login+"\" Incorrect password: FAILURE");
+            return new LogInDto(); //invalid password
         }
-        //logger.info("CAN'T LOGIN user \""+login+"\" Incorrect password: FAILURE");
-        return new LogInDto("Invalid Password","","");
 
 
     }
@@ -92,6 +89,63 @@ public class UserService {
             }
 
 
+    }
+
+    public BlockUserDto changeBlockUserByAdmin(String userId){
+        try{ //easy check of input data
+            Integer.parseInt(userId);
+        }catch (NumberFormatException e){
+            return new BlockUserDto("Invalid user id");
+        }
+        User currentUser = usersDao.findById(Integer.parseInt(userId));
+        if(currentUser!=null) {
+            if (currentUser.getRole() != Role.ADMIN) {
+                currentUser.setBlocked(!currentUser.isBlocked());
+                // block/unblock by admin - if blocked = true else = false
+                currentUser.setBlockedByAdmin(currentUser.isBlocked());
+
+                updateUser(currentUser);
+                return new BlockUserDto("User "+userId+" is now blocked: "+currentUser.isBlocked());
+            }
+            return new BlockUserDto("Cant block/unblock admin");
+        }
+        return new BlockUserDto("Cant find user with that id ("+userId+") in db");
+
+    }
+
+    public BlockUserDto changeBlockUser(String userId){
+        try{ //easy check of input data
+            Integer.parseInt(userId);
+        }catch (NumberFormatException e){
+            return new BlockUserDto("Invalid user id");
+        }
+        User currentUser = usersDao.findById(Integer.parseInt(userId));
+        if(currentUser!=null) {
+            if (currentUser.getRole() != Role.ADMIN) {
+                if(!currentUser.isBlockedByAdmin()) {
+                    currentUser.setBlocked(!currentUser.isBlocked());
+                    updateUser(currentUser);
+                    return new BlockUserDto("User " + userId + " is now blocked: " + currentUser.isBlocked());
+                }
+                return new BlockUserDto("Cant unblock: user " + userId + " is blocked by admin");
+            }
+            return new BlockUserDto("Cant block/unblock admin");
+        }
+        return new BlockUserDto("Cant find user with that id ("+userId+") in db");
+
+    }
+
+    public IsUserBlockedDto isUserBlocked(String userId){
+        try{ //easy check of input data
+            Integer.parseInt(userId);
+        }catch (NumberFormatException e){
+            return new IsUserBlockedDto("Invalid user id",false);
+        }
+        User currentUser = usersDao.findById(Integer.parseInt(userId));
+        if(currentUser!=null) {
+            return new IsUserBlockedDto(null,currentUser.isBlocked());
+        }
+        return new IsUserBlockedDto("Cant find user with that id ("+userId+") in db",false);
     }
 
     public void deleteUser(User user) {

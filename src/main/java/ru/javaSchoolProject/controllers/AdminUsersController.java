@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.javaSchoolProject.dto.BlockUserDto;
 import ru.javaSchoolProject.dto.UserDto;
 import ru.javaSchoolProject.models.User;
 import ru.javaSchoolProject.security.JwtProvider;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("manage/")
 public class AdminUsersController {
+
     final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
     @Autowired
@@ -25,6 +27,12 @@ public class AdminUsersController {
     public List<UserDto> getAllUsers(){
         logger.info("GET request: all users are taken from database");
         return userService.findAllUsers();
+    }
+
+    @GetMapping("/change_block_user_{userId}")
+    public BlockUserDto changeBlockUserByAdmin(@PathVariable String userId){
+        logger.info("GET request: block user with id " + userId);
+        return userService.changeBlockUserByAdmin(userId);
     }
 
 

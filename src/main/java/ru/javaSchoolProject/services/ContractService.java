@@ -9,10 +9,7 @@ import ru.javaSchoolProject.dao.TariffDao;
 import ru.javaSchoolProject.dao.UserDao;
 import ru.javaSchoolProject.dto.*;
 import ru.javaSchoolProject.enums.OptionType;
-import ru.javaSchoolProject.models.Contract;
-import ru.javaSchoolProject.models.ContractOptions;
-import ru.javaSchoolProject.models.Options;
-import ru.javaSchoolProject.models.Tariff;
+import ru.javaSchoolProject.models.*;
 
 import javax.swing.plaf.DimensionUIResource;
 import java.util.ArrayList;
@@ -36,45 +33,49 @@ public class ContractService {
 
     public ContractAnswerDto signContract(ContractDto contractDto){
         if(checkContractDto(contractDto)) { //check phoneNum, userId, tariffId
-            Tariff tariff = tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId()));
-            if(tariff!=null) { //tariff found
-                if(checkContractDtoOptions(contractDto,tariff)){ //check if all options are from chosen tariff
+            User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
+            if(!currentUser.isBlocked()){
+                Tariff tariff = tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId()));
+                if (tariff != null) { //tariff found
+                    if (checkContractDtoOptions(contractDto, tariff)) { //check if all options are from chosen tariff
 
-                    Contract newContract = new Contract();
-                    List<ContractOptions> newContractOptions = new ArrayList<>();
+                        Contract newContract = new Contract();
+                        List<ContractOptions> newContractOptions = new ArrayList<>();
 
-                    //make contractOptions from optionDto
-                    if(contractDto.getContractOptions()!=null) {
-                        for (OptionsDto opDto : contractDto.getContractOptions()) {
-                            ContractOptions newOption = new ContractOptions();
-                            newOption.setContract(newContract);
-                            newOption.setOptionId(Integer.parseInt(opDto.getId()));
-                            newOption.setName(opDto.getName());
-                            newOption.setOptionType(OptionType.valueOf(opDto.getOptionType()));
-                            newOption.setCost(Double.parseDouble(opDto.getCost()));
+                        //make contractOptions from optionDto
+                        if (contractDto.getContractOptions() != null) {
+                            for (OptionsDto opDto : contractDto.getContractOptions()) {
+                                ContractOptions newOption = new ContractOptions();
+                                newOption.setContract(newContract);
+                                newOption.setOptionId(Integer.parseInt(opDto.getId()));
+                                newOption.setName(opDto.getName());
+                                newOption.setOptionType(OptionType.valueOf(opDto.getOptionType()));
+                                newOption.setCost(Double.parseDouble(opDto.getCost()));
 
-                            newContractOptions.add(newOption);
+                                newContractOptions.add(newOption);
+                            }
                         }
-                    }
 
-                    //make contract
-                    newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
-                    newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
-                    newContract.setUser(userDao.findById(Integer.parseInt(contractDto.getUserId())));
-                    newContract.setContractOptions(newContractOptions);
+                        //make contract
+                        newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
+                        newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
+                        newContract.setUser(currentUser);
+                        newContract.setContractOptions(newContractOptions);
 
-                    if(contractDao.save(newContract)) {
-                        return new ContractAnswerDto("Success");
+                        if (contractDao.save(newContract)) {
+                            return new ContractAnswerDto("Success");
+                        } else {//NOT unique phone number
+                            return new ContractAnswerDto("Telephone number: " + newContract.getPhoneNumber() + " is already taken");
+                        }
+                    } else { //didnt pass option check
+                        return new ContractAnswerDto("cant save contract options are invalid");
                     }
-                    else {//NOT unique phone number
-                        return new ContractAnswerDto("Telephone number: "+newContract.getPhoneNumber()+" is already taken");
-                    }
-                }else { //didnt pass option check
-                    return new ContractAnswerDto("cant save contract options are invalid");
+                } else { //tariff not found
+                    return new ContractAnswerDto("Tariff not found");
                 }
             }
-            else { //tariff not found
-                return new ContractAnswerDto("Tariff not found");
+            else { //user is blocked
+                return new ContractAnswerDto("User is blocked");
             }
         }
         else { //invalid contractDto data
@@ -173,15 +174,23 @@ public class ContractService {
     }
 
     public ContractAnswerDto deleteContract(String id){
-        try{ //easy check
+        try { //easy check
             Integer.parseInt(id);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return new ContractAnswerDto("Invalid id");
         }
-        if(!contractDao.deleteContract(Integer.parseInt(id))){
-            return new ContractAnswerDto("Cant delete contract from database");
+        Contract currentContract = contractDao.getContractById(Integer.parseInt(id));
+        if(currentContract!=null) {
+            if (!currentContract.getUser().isBlocked()) {
+                if (!contractDao.deleteContract(Integer.parseInt(id))) {
+                    return new ContractAnswerDto("Cant delete contract from database");
+                }
+                return new ContractAnswerDto("Delete success");
+            }
+            //user is blocked
+            return new ContractAnswerDto("Cant delete tariff: user is blocked");
         }
-        return new ContractAnswerDto("Delete success");
+        return  new ContractAnswerDto("Cant delete tariff: tariff not found");
     }
 
 
