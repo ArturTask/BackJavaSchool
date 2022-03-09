@@ -32,7 +32,7 @@ public class ContractController {
         return  contractService.getContractIdsAndNumbers(userId);
     }
 
-    @DeleteMapping("delete_contract_{id}")
+    @DeleteMapping("/delete_contract_{id}")
     public ContractAnswerDto deleteContract(@PathVariable String id){
         return contractService.deleteContract(id);
     }

@@ -61,4 +61,19 @@ public class ContractDao {
         return true;
     }
 
+    public List<Contract> getAllContracts(){
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        List<Contract> contracts = (List<Contract>) session.createQuery("From Contract ").list();
+        tx.commit();
+        session.close();
+        if(!contracts.isEmpty())
+        {
+            return contracts;
+        }
+        else {
+            return null;
+        }
+    }
+
 }

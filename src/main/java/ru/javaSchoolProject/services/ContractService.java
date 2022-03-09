@@ -193,6 +193,20 @@ public class ContractService {
         return  new ContractAnswerDto("Cant delete tariff: tariff not found");
     }
 
+    public List<ContractInfoAboutUserDto> getAllContractsUserInfo(){
+        //get all contract info about users
+        List<Contract> currentContracts = contractDao.getAllContracts();
+        //initialize dto response entity
+        List<ContractInfoAboutUserDto> foundContractInfoAboutUserDtoList = new ArrayList<>();
+
+        if(currentContracts!=null) {
+            for (Contract c : currentContracts) {
+                foundContractInfoAboutUserDtoList.add(new ContractInfoAboutUserDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber()),String.valueOf(c.getUser().getId()),c.getUser().getLogin()));
+            }
+        }
+        return foundContractInfoAboutUserDtoList;
+    }
+
 
     //validators
     private static boolean checkContractDto(ContractDto contractDto){
