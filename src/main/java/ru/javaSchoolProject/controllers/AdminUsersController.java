@@ -46,6 +46,12 @@ public class AdminUsersController {
         return contractService.getAllContractsUserInfo();
     }
 
+    @GetMapping("/find_user_by_phone_number_{phoneNumber}")
+    public UserDto findUserByPhoneNumber(@PathVariable String phoneNumber){
+        System.out.println(phoneNumber);
+        return userService.findUserByPhoneNumber(phoneNumber);
+    }
+
 
 
 

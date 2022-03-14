@@ -218,7 +218,10 @@ public class ContractService {
         catch (NumberFormatException e){
             return false;
         }
-        return contractDto.getPhoneNumber().startsWith("8777"); //check if number is valid
+        if(contractDto.getPhoneNumber().length()!=11){
+            return false;
+        }
+        return contractDto.getPhoneNumber().startsWith("8777"); //check if operator and country number is valid
     }
 
     private static boolean checkContractDtoOptions(ContractDto contractDto, Tariff currentTariff){

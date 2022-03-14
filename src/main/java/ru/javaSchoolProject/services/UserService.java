@@ -148,6 +148,23 @@ public class UserService {
         return new IsUserBlockedDto("Cant find user with that id ("+userId+") in db",false);
     }
 
+    public UserDto findUserByPhoneNumber(String phoneNumber){
+        if(checkPhoneNumber(phoneNumber)){
+            User currentUser = usersDao.findByPhoneNumber(Long.parseLong(phoneNumber));
+            if(currentUser!=null){ // user is found
+                //response entity
+                UserDto userDto = new UserDto();
+                userDto.setId(currentUser.getId());
+                userDto.setLogin(currentUser.getLogin());
+                return userDto;
+            }
+        }
+        else{ //invalid number
+            return new UserDto();
+        } //user not found
+        return new UserDto();
+    }
+
     public void deleteUser(User user) {
         usersDao.delete(user);
     }
@@ -169,5 +186,20 @@ public class UserService {
         }
         return dtoUsers;
     }
+
+    //validators
+    private static boolean checkPhoneNumber(String phoneNumber){
+        try{
+            Long.parseLong(phoneNumber);
+        }
+        catch (NumberFormatException e){
+            return false;
+        }
+        if(phoneNumber.length()!=11){
+            return false;
+        }
+        return phoneNumber.startsWith("8777"); //check if operator and country number is valid
+    }
+
 
 }

@@ -84,7 +84,25 @@ public class UserDao {
     }
 
     public List<User> findAll() {
-        List<User> users = (List<User>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        List<User> users = (List<User>)  session.createQuery("From User").list();
+        tx.commit();
+        session.close();
         return users;
+    }
+
+    public User findByPhoneNumber(Long phoneNumber){
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        List<User> users = (List<User>)  session.createQuery("select user From Contract c where c.phoneNumber="+phoneNumber).list();
+        tx.commit();
+        session.close();
+        if(!users.isEmpty()) {
+            return users.get(0);
+        }
+        else {
+            return null;
+        }
     }
 }

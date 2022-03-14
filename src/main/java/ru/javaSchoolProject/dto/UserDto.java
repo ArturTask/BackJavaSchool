@@ -19,8 +19,6 @@ public class UserDto {
 
     private String role;
 
-
-
     public String getLogin() {
         return login;
     }
