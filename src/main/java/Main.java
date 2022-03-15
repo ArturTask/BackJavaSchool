@@ -1,3 +1,5 @@
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.javaSchoolProject.dao.ContractDao;
 import ru.javaSchoolProject.dao.OptionsDao;
 import ru.javaSchoolProject.dao.TariffDao;
@@ -22,9 +24,10 @@ public class Main {
     private static OptionsDao optionsDao = new OptionsDao();
     private static UserDao userDao = new UserDao();
     private static ContractDao contractDao = new ContractDao();
+    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
         /* to delete tariff I need to find it first
         */
 //        Tariff oldTariff = tariffDao.findTariffById(13);
@@ -84,8 +87,74 @@ public class Main {
 
 //        contractDao.deleteContract(6);
 
+//    }
 
+    public static void main(String[] args) {
+       List<Tariff> tariffs = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
+        users.add(new User("admin",passwordEncoder.encode("admin"),Role.ADMIN));
+        users.add(new User("Artur",passwordEncoder.encode("Artur"),Role.CUSTOMER));
+        users.add(new User("Josh",passwordEncoder.encode("Josh"),Role.CUSTOMER));
+        users.add(new User("John",passwordEncoder.encode("John"),Role.CUSTOMER));
+        users.add(new User("Kate",passwordEncoder.encode("Kate"),Role.CUSTOMER));
+        users.add(new User("Levi",passwordEncoder.encode("Levi"),Role.CUSTOMER));
+        users.add(new User("Daniil",passwordEncoder.encode("Daniil"),Role.CUSTOMER));
+        users.add(new User("Mary",passwordEncoder.encode("Mary"),Role.CUSTOMER));
+
+        tariffs.add(new Tariff("Super",20d,"The most Superior tariff: 100 minutes, 100 messages, 20 gb of internet",null));
+        List<Options> options = new ArrayList<>();
+        options.add(new Options("50 messages",OptionType.MESSAGES,5d, tariffs.get(0)));
+        options.add(new Options("50 minutes",OptionType.MINUTES,5d, tariffs.get(0)));
+        options.add(new Options("10 gb",OptionType.INTERNET,10d, tariffs.get(0)));
+        options.add(new Options("anti-spam",OptionType.UTIL,10d, tariffs.get(0)));
+        options.add(new Options("call-security",OptionType.UTIL,10d, tariffs.get(0)));
+
+        tariffs.get(0).setOptions(options);
+
+        tariffs.add(new Tariff("Internet Master",30d,"For internet lovers: 0 minutes, 0 messages, 100 gb of internet",null));
+        List<Options> options2 = new ArrayList<>();
+        options2.add(new Options("50 messages",OptionType.MESSAGES,5d, tariffs.get(1)));
+        options2.add(new Options("50 minutes",OptionType.MINUTES,5d, tariffs.get(1)));
+        options2.add(new Options("50 gb",OptionType.INTERNET,15d, tariffs.get(1)));
+        tariffs.get(1).setOptions(options2);
+
+        tariffs.add(new Tariff("Call master",40d,"YOU like talking?: 1000 minutes, 100 messages, 20 gb of internet",null));
+        List<Options> options3 = new ArrayList<>();
+        options3.add(new Options("50 messages",OptionType.MESSAGES,5d, tariffs.get(2)));
+        options3.add(new Options("50 minutes",OptionType.MINUTES,5d, tariffs.get(2)));
+        options3.add(new Options("10 gb",OptionType.INTERNET,10d, tariffs.get(2)));
+        options3.add(new Options("anti-spam",OptionType.UTIL,10d, tariffs.get(2)));
+        tariffs.get(2).setOptions(options3);
+
+        tariffs.add(new Tariff("Netariff",5d,"Choose your own options for tariff: 0 minutes, 0 messages, 0 gb of internet",null));
+        List<Options> options4 = new ArrayList<>();
+        options4.add(new Options("50 messages",OptionType.MESSAGES,5d, tariffs.get(3)));
+        options4.add(new Options("100 messages",OptionType.MESSAGES,10d, tariffs.get(3)));
+        options4.add(new Options("50 minutes",OptionType.MINUTES,5d, tariffs.get(3)));
+        options4.add(new Options("100 minutes",OptionType.MINUTES,10d, tariffs.get(3)));
+        options4.add(new Options("10 gb",OptionType.INTERNET,10d, tariffs.get(3)));
+        options4.add(new Options("20 gb",OptionType.INTERNET,20d, tariffs.get(3)));
+        options4.add(new Options("anti-spam",OptionType.UTIL,10d, tariffs.get(3)));
+        tariffs.get(3).setOptions(options4);
+
+        tariffs.add(new Tariff("MEGA",50d,"MEGA tariff: 1000 minutes, 1000 messages, 200 gb of internet",null));
+
+        tariffs.add(new Tariff("Message master",30d,"If you like chatting: 100 minutes, 1000 messages, 20 gb of internet",null));
+        List<Options> options5 = new ArrayList<>();
+        options5.add(new Options("50 messages",OptionType.MESSAGES,5d, tariffs.get(5)));
+        options5.add(new Options("50 minutes",OptionType.MINUTES,5d, tariffs.get(5)));
+        options5.add(new Options("10 gb",OptionType.INTERNET,10d, tariffs.get(5)));
+        options5.add(new Options("anti-spam",OptionType.UTIL,10d, tariffs.get(5)));
+        tariffs.get(5).setOptions(options5);
+
+        for (User u:users) {
+            userDao.save(u);
+        }
+
+        for (Tariff t:tariffs) {
+            tariffDao.addTariff(t);
+        }
 
     }
 }

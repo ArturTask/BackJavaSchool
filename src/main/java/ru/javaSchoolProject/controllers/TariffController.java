@@ -35,7 +35,7 @@ public class TariffController {
         return tariffService.findTariffById(id);
     }
 
-    @PostMapping("update_tariff")
+    @PostMapping("update_tariff") //for admin
     public TariffAnswerDto updateTariff (@RequestBody TariffDto tariffDto){
         logger.info("POST UPDATE TARIFF by id = "+tariffDto.getId());
         return tariffService.updateTariff(tariffDto);
@@ -49,7 +49,6 @@ public class TariffController {
 
     @GetMapping("get_all_active_tariffs") //for customer
     public List<TariffDto> getAllActiveTariffs(){
-        logger.info("GET ALL ACTIVE TARIFFS request");
         return tariffService.getAllActiveTariffs();
     }
 

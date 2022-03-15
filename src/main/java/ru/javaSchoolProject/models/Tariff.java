@@ -17,11 +17,12 @@ public class Tariff {
         this.setActive(true);
     }
 
-    public Tariff(String title, int cost, String description, List<Options> options) {
+    public Tariff(String title, double cost, String description, List<Options> options) {
         this.title = title;
         this.cost = cost;
         this.description = description;
         this.options = options;
+        this.isActive=true;
     }
 
     @Id
