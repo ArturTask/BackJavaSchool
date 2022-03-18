@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
 @RequestMapping("auth")
 public class AuthController {
 
+    final static Logger logger = Logger.getLogger(AuthController.class.getName());
+
     @Autowired
     private UserService userService;
-
-    final static Logger logger = Logger.getLogger(AuthController.class.getName());
 
     @PostMapping("/log_in")
     public LogInDto postLogUser(@RequestBody UserDto user){

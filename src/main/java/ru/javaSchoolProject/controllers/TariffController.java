@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("tariff")
 public class TariffController {
 
+    final static Logger logger = Logger.getLogger(TariffController.class.getName());
+
     @Autowired
     private TariffService tariffService;
-
-    final static Logger logger = Logger.getLogger(TariffController.class.getName());
 
     @PostMapping("add_new") //for admin
     public TariffAnswerDto addNewTariff(@RequestBody TariffDto tariffDto){

@@ -105,7 +105,7 @@ public class UserService {
                 currentUser.setBlockedByAdmin(currentUser.isBlocked());
 
                 updateUser(currentUser);
-                return new BlockUserDto("User "+userId+" is now blocked: "+currentUser.isBlocked());
+                return new BlockUserDto("User "+currentUser.getLogin()+" is now blocked: "+currentUser.isBlocked());
             }
             return new BlockUserDto("Cant block/unblock admin");
         }
@@ -125,7 +125,7 @@ public class UserService {
                 if(!currentUser.isBlockedByAdmin()) {
                     currentUser.setBlocked(!currentUser.isBlocked());
                     updateUser(currentUser);
-                    return new BlockUserDto("User " + userId + " is now blocked: " + currentUser.isBlocked());
+                    return new BlockUserDto("User " + currentUser.getLogin() + " is now blocked: " + currentUser.isBlocked());
                 }
                 return new BlockUserDto("Cant unblock: user " + userId + " is blocked by admin");
             }

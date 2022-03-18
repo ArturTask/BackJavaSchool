@@ -176,18 +176,18 @@ public class TariffService {
         //delete some options
         for(int i=0;i<options.size();i++){ //we go through elems in dao
             int daoId = options.get(i).getId();
-            if(j==optionsDto.size()){
+            if(j==optionsDto.size()){ // if we have deleted all options and new options size = 0
                 optionsDao.deleteOptionById(daoId);
             }
-            int dtoId = Integer.parseInt(optionsDto.get(j).getId());
-            if(dtoId<0){//it means that we have reached new options
-                optionsDao.deleteOptionById(daoId);
-            }
-            else if(daoId==dtoId){//we didnt delete option
-                j++;
-            }
-            else if(daoId<dtoId){//we deleted this option
-                optionsDao.deleteOptionById(daoId);
+            else { //some update
+                int dtoId = Integer.parseInt(optionsDto.get(j).getId());
+                if (dtoId < 0) {//it means that we have reached new options
+                    optionsDao.deleteOptionById(daoId);
+                } else if (daoId == dtoId) {//we didnt delete option
+                    j++;
+                } else if (daoId < dtoId) {//we deleted this option
+                    optionsDao.deleteOptionById(daoId);
+                }
             }
         }
 
