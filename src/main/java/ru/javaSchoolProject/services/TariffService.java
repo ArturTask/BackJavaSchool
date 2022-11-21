@@ -42,7 +42,7 @@ public class TariffService {
             currentTariff.setOptions(options);
             currentTariff.setActive(true);
             if (tariffDao.addTariff(currentTariff)) { //saved to db
-                return new TariffAnswerDto("OK");
+                return new TariffAnswerDto("Success");
             } else { // could not save
                 return new TariffAnswerDto("Error");
             }
@@ -97,7 +97,7 @@ public class TariffService {
                 currentTariff.setCost(Double.parseDouble(tariffDto.getCost()));
                 if(tariffDao.updateTariff(currentTariff)){
                     logger.info("UPDATE TARIFF: success");
-                    return new TariffAnswerDto("OK");
+                    return new TariffAnswerDto("Success");
                 }
                 else {
                     logger.warn("CANT UPDATE TARIFF: Error");

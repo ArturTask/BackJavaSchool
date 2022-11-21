@@ -74,6 +74,18 @@
       <version>8.0.13</version>
     </dependency>
 
+<!--    <dependency>-->
+<!--      <groupId>postgresql</groupId>-->
+<!--      <artifactId>postgresql</artifactId>-->
+<!--      <version>9.1-901-1.jdbc4</version>-->
+<!--    </dependency>-->
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.5.0</version>
+    </dependency>
+
 <!--    lombok-->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -87,7 +99,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>5.2.6.Final</version>
+      <version>5.4.32.Final</version>
     </dependency>
 
     <dependency>
