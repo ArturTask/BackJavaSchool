@@ -4,21 +4,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javaSchoolProject.dao.ContractDao;
-import ru.javaSchoolProject.dao.OptionsDao;
 import ru.javaSchoolProject.dao.TariffDao;
 import ru.javaSchoolProject.dao.UserDao;
 import ru.javaSchoolProject.dto.*;
 import ru.javaSchoolProject.enums.OptionType;
 import ru.javaSchoolProject.models.*;
 
-import javax.swing.plaf.DimensionUIResource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class ContractService {
+public class ContractService_old {
 
     @Autowired
     private ContractDao contractDao;
@@ -32,61 +30,54 @@ public class ContractService {
     final static Logger logger = Logger.getLogger(TariffService.class.getName());
 
     public ContractAnswerDto signContract(ContractDto contractDto){
-        if(!checkContractDto(contractDto)) { //check phoneNum, userId, tariffId
-            return new ContractAnswerDto("Invalid contract data(wrong phone number or user/tariff id)");
-        }
-        User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
-        if(currentUser.isBlocked()){
-            return new ContractAnswerDto("User is blocked");
-        }
-        Tariff tariff = tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId()));
-        if (tariff == null) { //tariff not found
-            return new ContractAnswerDto("Tariff not found");
-        }
-        if (checkContractDtoOptions(contractDto, tariff)) { //check if all options are from chosen tariff
-            return new ContractAnswerDto("cant save contract options are invalid"); // didn't pass option check
-        }
+        if(checkContractDto(contractDto)) { //check phoneNum, userId, tariffId
+            User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
+            if(!currentUser.isBlocked()){
+                Tariff tariff = tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId()));
+                if (tariff != null) { //tariff found
+                    if (checkContractDtoOptions(contractDto, tariff)) { //check if all options are from chosen tariff
 
-        Contract newContract = new Contract();
-        List<ContractOptions> newContractOptions = new ArrayList<>();
+                        Contract newContract = new Contract();
+                        List<ContractOptions> newContractOptions = new ArrayList<>();
 
-        //contractOptions from optionDto
-        makeContractOptionsFromDto(contractDto, newContract, newContractOptions);
+                        //make contractOptions from optionDto
+                        if (contractDto.getContractOptions() != null) {
+                            for (OptionsDto opDto : contractDto.getContractOptions()) {
+                                ContractOptions newOption = new ContractOptions();
+                                newOption.setContract(newContract);
+                                newOption.setOptionId(Integer.parseInt(opDto.getId()));
+                                newOption.setName(opDto.getName());
+                                newOption.setOptionType(OptionType.valueOf(opDto.getOptionType()));
+                                newOption.setCost(Double.parseDouble(opDto.getCost()));
 
-        makeContract(contractDto, currentUser, newContract, newContractOptions);
+                                newContractOptions.add(newOption);
+                            }
+                        }
 
-        return saveContract(newContract);
+                        //make contract
+                        newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
+                        newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
+                        newContract.setUser(currentUser);
+                        newContract.setContractOptions(newContractOptions);
 
-
-    }
-
-    private ContractAnswerDto saveContract(Contract newContract) {
-        if (contractDao.save(newContract)) {
-            return new ContractAnswerDto("Success");
-        } else {//NOT unique phone number
-            return new ContractAnswerDto("Telephone number: " + newContract.getPhoneNumber() + " is already taken");
-        }
-    }
-
-    private void makeContract(ContractDto contractDto, User currentUser, Contract newContract, List<ContractOptions> newContractOptions) {
-        newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
-        newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
-        newContract.setUser(currentUser);
-        newContract.setContractOptions(newContractOptions);
-    }
-
-    private void makeContractOptionsFromDto(ContractDto contractDto, Contract newContract, List<ContractOptions> newContractOptions) {
-        if (contractDto.getContractOptions() != null) {
-            for (OptionsDto opDto : contractDto.getContractOptions()) {
-                ContractOptions newOption = new ContractOptions();
-                newOption.setContract(newContract);
-                newOption.setOptionId(Integer.parseInt(opDto.getId()));
-                newOption.setName(opDto.getName());
-                newOption.setOptionType(OptionType.valueOf(opDto.getOptionType()));
-                newOption.setCost(Double.parseDouble(opDto.getCost()));
-
-                newContractOptions.add(newOption);
+                        if (contractDao.save(newContract)) {
+                            return new ContractAnswerDto("Success");
+                        } else {//NOT unique phone number
+                            return new ContractAnswerDto("Telephone number: " + newContract.getPhoneNumber() + " is already taken");
+                        }
+                    } else { //didnt pass option check
+                        return new ContractAnswerDto("cant save contract options are invalid");
+                    }
+                } else { //tariff not found
+                    return new ContractAnswerDto("Tariff not found");
+                }
             }
+            else { //user is blocked
+                return new ContractAnswerDto("User is blocked");
+            }
+        }
+        else { //invalid contractDto data
+            return new ContractAnswerDto("Invalid contract data(wrong phone number or user/tariff id)");
         }
     }
 
