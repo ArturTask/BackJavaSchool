@@ -1,5 +1,6 @@
 package ru.javaSchoolProject.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Set;
 import static ru.javaSchoolProject.utils.DtoUtils.*;
 
 @Service
+@Slf4j
 public class ContractService {
 
     @Autowired
@@ -27,8 +29,6 @@ public class ContractService {
 
     @Autowired
     private UserDao userDao;
-
-    final static Logger logger = Logger.getLogger(TariffService.class.getName());
 
     public ContractAnswerDto signContract(ContractDto contractDto){
 
@@ -43,6 +43,68 @@ public class ContractService {
         return saveContract(newContract);
 
 
+    }
+
+    public FullContractDto getContract(ContractIdAndNumberDto contractIdAndNumberDto){
+        //dao contract
+        Contract currentContract = contractDao.getContractById(Integer.parseInt(contractIdAndNumberDto.getContractId()));
+        FullContractDto fullContractDto = checkGetForFailure(contractIdAndNumberDto, currentContract);
+        if (fullContractDto!=null){
+            return fullContractDto;
+        }
+
+
+        //parse contractOptions to optionDtos
+        List<OptionsDto> foundContractOptions = optionDtoFromContractOptions(currentContract);
+
+        //parse options of tariff in contract to optionsDto (all options of tariff)
+        Tariff currentTariff = currentContract.getTariff();
+        List<OptionsDto> foundTariffOptions = optionsDtoFromOptions(currentContract, currentTariff);
+
+        //parse tariff to tariffDto
+        TariffDto tariffDto = tariffDtoFromTariff(currentTariff, foundTariffOptions);
+
+        //make dto response contract
+        return makeFullContractDto(currentContract, foundContractOptions, tariffDto);
+
+    }
+
+    public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
+        if (checkUserId(userId)) return new ArrayList<>();
+        //get contract info by user id
+        List<Contract> currentContracts = contractDao.getContractsOfUser(Integer.parseInt(userId));
+        //initialize dto response entity
+        List<ContractIdAndNumberDto> foundContractIdAndNumberDtoList = new ArrayList<>();
+
+        if(currentContracts!=null) {
+            for (Contract c : currentContracts) {
+                foundContractIdAndNumberDtoList.add(new ContractIdAndNumberDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber())));
+            }
+        }
+        return foundContractIdAndNumberDtoList;
+    }
+
+    public ContractAnswerDto deleteContract(String id){
+        ContractAnswerDto contractAnswerDto = checkDeleteForFailure(id);
+        if (contractAnswerDto != null) {
+            return contractAnswerDto;
+        }
+        return new ContractAnswerDto("Delete success");
+
+    }
+
+    public List<ContractInfoAboutUserDto> getAllContractsUserInfo(){
+        //get all contract info about users
+        List<Contract> currentContracts = contractDao.getAllContracts();
+        //initialize dto response entity
+        List<ContractInfoAboutUserDto> foundContractInfoAboutUserDtoList = new ArrayList<>();
+
+        if(currentContracts!=null) {
+            for (Contract c : currentContracts) {
+                foundContractInfoAboutUserDtoList.add(new ContractInfoAboutUserDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber()),String.valueOf(c.getUser().getId()),c.getUser().getLogin()));
+            }
+        }
+        return foundContractInfoAboutUserDtoList;
     }
 
     private ContractAnswerDto checkSignForFailure(ContractDto contractDto, User currentUser){
@@ -80,31 +142,6 @@ public class ContractService {
         return newContract;
     }
 
-
-    public FullContractDto getContract(ContractIdAndNumberDto contractIdAndNumberDto){
-        //dao contract
-        Contract currentContract = contractDao.getContractById(Integer.parseInt(contractIdAndNumberDto.getContractId()));
-        FullContractDto fullContractDto = checkGetForFailure(contractIdAndNumberDto, currentContract);
-        if (fullContractDto!=null){
-            return fullContractDto;
-        }
-
-
-        //parse contractOptions to optionDtos
-        List<OptionsDto> foundContractOptions = optionDtoFromContractOptions(currentContract);
-
-        //parse options of tariff in contract to optionsDto (all options of tariff)
-        Tariff currentTariff = currentContract.getTariff();
-        List<OptionsDto> foundTariffOptions = optionsDtoFromOptions(currentContract, currentTariff);
-
-        //parse tariff to tariffDto
-        TariffDto tariffDto = tariffDtoFromTariff(currentTariff, foundTariffOptions);
-
-        //make dto response contract
-        return makeFullContractDto(currentContract, foundContractOptions, tariffDto);
-
-    }
-
     private FullContractDto makeFullContractDto(Contract currentContract, List<OptionsDto> foundContractOptions, TariffDto tariffDto) {
         FullContractDto foundContract = new FullContractDto();
         foundContract.setId(String.valueOf(currentContract.getId()));
@@ -139,21 +176,6 @@ public class ContractService {
 
     }
 
-    public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
-        if (checkUserId(userId)) return new ArrayList<>();
-        //get contract info by user id
-        List<Contract> currentContracts = contractDao.getContractsOfUser(Integer.parseInt(userId));
-        //initialize dto response entity
-        List<ContractIdAndNumberDto> foundContractIdAndNumberDtoList = new ArrayList<>();
-
-        if(currentContracts!=null) {
-            for (Contract c : currentContracts) {
-                foundContractIdAndNumberDtoList.add(new ContractIdAndNumberDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber())));
-            }
-        }
-        return foundContractIdAndNumberDtoList;
-    }
-
     private boolean checkUserId(String userId) {
         try {
             Integer.parseInt(userId);
@@ -161,16 +183,6 @@ public class ContractService {
             return false;
         }
         return true;
-    }
-
-
-    public ContractAnswerDto deleteContract(String id){
-        ContractAnswerDto contractAnswerDto = checkDeleteForFailure(id);
-        if (contractAnswerDto != null) {
-            return contractAnswerDto;
-        }
-        return new ContractAnswerDto("Delete success");
-
     }
 
     private ContractAnswerDto checkDeleteForFailure(String id) {
@@ -188,22 +200,6 @@ public class ContractService {
         return null;
     }
 
-    public List<ContractInfoAboutUserDto> getAllContractsUserInfo(){
-        //get all contract info about users
-        List<Contract> currentContracts = contractDao.getAllContracts();
-        //initialize dto response entity
-        List<ContractInfoAboutUserDto> foundContractInfoAboutUserDtoList = new ArrayList<>();
-
-        if(currentContracts!=null) {
-            for (Contract c : currentContracts) {
-                foundContractInfoAboutUserDtoList.add(new ContractInfoAboutUserDto(String.valueOf(c.getId()), String.valueOf(c.getPhoneNumber()),String.valueOf(c.getUser().getId()),c.getUser().getLogin()));
-            }
-        }
-        return foundContractInfoAboutUserDtoList;
-    }
-
-
-    //validators
     private boolean checkContractDto(ContractDto contractDto){
         try{
             Integer.parseInt(contractDto.getTariffId());
@@ -236,7 +232,7 @@ public class ContractService {
 
     private boolean checkTariffOptions(List<OptionsDto> chosenOptions, List<Options> currentTariffOptions) {
         if(chosenOptions.size()>currentTariffOptions.size()){ // you cant choose more options than possible
-            logger.warn("CANT SIGN CONTRACT: options size is more than max");
+            log.warn("CANT SIGN CONTRACT: options size is more than max");
             return false;
         }
         return true;
@@ -252,7 +248,7 @@ public class ContractService {
                 return false;
             }
             if(!optionIds.contains(Integer.parseInt(opDto.getId()))){
-                logger.warn("CANT SIGN CONTRACT: no option with id = "+opDto.getId());
+                log.warn("CANT SIGN CONTRACT: no option with id = "+opDto.getId());
                 return false;
             }
 
@@ -267,7 +263,7 @@ public class ContractService {
             Double.parseDouble(opDto.getCost());
         }
         catch (NumberFormatException e){
-            logger.warn("CANT SIGN CONTRACT: wrong type of parameter in option");
+            log.warn("CANT SIGN CONTRACT: wrong type of parameter in option");
             return false;
         }
         return true;
