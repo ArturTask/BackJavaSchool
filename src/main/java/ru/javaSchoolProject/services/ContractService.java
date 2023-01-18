@@ -139,7 +139,6 @@ public class ContractService {
 
     }
 
-    // todo refactor!
     public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
         if (checkUserId(userId)) return new ArrayList<>();
         //get contract info by user id
@@ -205,7 +204,7 @@ public class ContractService {
 
 
     //validators
-    private static boolean checkContractDto(ContractDto contractDto){
+    private boolean checkContractDto(ContractDto contractDto){
         try{
             Integer.parseInt(contractDto.getTariffId());
             Long.parseLong(contractDto.getPhoneNumber());
@@ -220,43 +219,58 @@ public class ContractService {
         return contractDto.getPhoneNumber().startsWith("8777"); //check if operator and country number is valid
     }
 
-    // todo refactor!
-    private static boolean checkContractDtoOptions(ContractDto contractDto, Tariff currentTariff){
+    private boolean checkContractDtoOptions(ContractDto contractDto, Tariff currentTariff){
         List<OptionsDto> chosenOptions = contractDto.getContractOptions();
-        if(chosenOptions!=null){ //if options are chosen
-            List<Options> currentOptions = currentTariff.getOptions();
+        if(chosenOptions==null) { //if options are not chosen
+            return true;
+        }
+        List<Options> currentTariffOptions = currentTariff.getOptions();
 
-            if(chosenOptions.size()>currentOptions.size()){ // you cant choose more options than possible
-                logger.warn("CANT SIGN CONTRACT: options size is more than max");
+        if (!checkTariffOptions(chosenOptions, currentTariffOptions)) {
+            return false;
+        }
+
+        return checkOptionDtos(chosenOptions, currentTariffOptions);
+
+    }
+
+    private boolean checkTariffOptions(List<OptionsDto> chosenOptions, List<Options> currentTariffOptions) {
+        if(chosenOptions.size()>currentTariffOptions.size()){ // you cant choose more options than possible
+            logger.warn("CANT SIGN CONTRACT: options size is more than max");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkOptionDtos(List<OptionsDto> chosenOptions, List<Options> tariffOptions) {
+        Set<Integer> optionIds = new HashSet<>();
+        for (Options op:tariffOptions) { //create set of allowed options for current tariff
+            optionIds.add(op.getId());
+        }
+        for (OptionsDto opDto:chosenOptions){
+            if (!checkOptionIdCost(opDto)) {
+                return false;
+            }
+            if(!optionIds.contains(Integer.parseInt(opDto.getId()))){
+                logger.warn("CANT SIGN CONTRACT: no option with id = "+opDto.getId());
                 return false;
             }
 
-            Set<Integer> optionIds = new HashSet<Integer>();
-            for (Options op:currentOptions) { //create set of allowed options for current tariff
-                optionIds.add(op.getId());
-            }
 
-            for (OptionsDto opDto:chosenOptions){
-                try{
-                    Integer.parseInt(opDto.getId());
-                    Double.parseDouble(opDto.getCost());
-                }
-                catch (NumberFormatException e){
-                    logger.warn("CANT SIGN CONTRACT: wrong type of parameter in option");
-                    return false;
-                }
-                if(!optionIds.contains(Integer.parseInt(opDto.getId()))){
-                    logger.warn("CANT SIGN CONTRACT: no option with id = "+opDto.getId());
-                    return false;
-                }
-
-
-            }
-            return true;
-        } // no chosen options
-        else {
-            return true;
         }
+        return true;
+    }
+
+    private boolean checkOptionIdCost(OptionsDto opDto) {
+        try{
+            Integer.parseInt(opDto.getId());
+            Double.parseDouble(opDto.getCost());
+        }
+        catch (NumberFormatException e){
+            logger.warn("CANT SIGN CONTRACT: wrong type of parameter in option");
+            return false;
+        }
+        return true;
     }
 
 }
