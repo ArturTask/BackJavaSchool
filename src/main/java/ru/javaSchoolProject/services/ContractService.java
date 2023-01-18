@@ -141,11 +141,7 @@ public class ContractService {
 
     // todo refactor!
     public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
-        try{
-            Integer.parseInt(userId);
-        }catch (NumberFormatException e){// cant parse userId
-            return new ArrayList<>();
-        }
+        if (checkUserId(userId)) return new ArrayList<>();
         //get contract info by user id
         List<Contract> currentContracts = contractDao.getContractsOfUser(Integer.parseInt(userId));
         //initialize dto response entity
@@ -159,25 +155,38 @@ public class ContractService {
         return foundContractIdAndNumberDtoList;
     }
 
-    // todo refactor!
-    public ContractAnswerDto deleteContract(String id){
-        try { //easy check
-            Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            return new ContractAnswerDto("Invalid id");
+    private boolean checkUserId(String userId) {
+        try {
+            Integer.parseInt(userId);
+        } catch (NumberFormatException e) {// cant parse userId
+            return false;
         }
+        return true;
+    }
+
+
+    public ContractAnswerDto deleteContract(String id){
+        ContractAnswerDto contractAnswerDto = checkDeleteForFailure(id);
+        if (contractAnswerDto != null) {
+            return contractAnswerDto;
+        }
+        return new ContractAnswerDto("Delete success");
+
+    }
+
+    private ContractAnswerDto checkDeleteForFailure(String id) {
+        if (!checkUserId(id)) return new ContractAnswerDto("Invalid id");
         Contract currentContract = contractDao.getContractById(Integer.parseInt(id));
-        if(currentContract!=null) {
-            if (!currentContract.getUser().isBlocked()) {
-                if (!contractDao.deleteContract(Integer.parseInt(id))) {
-                    return new ContractAnswerDto("Cant delete contract from database");
-                }
-                return new ContractAnswerDto("Delete success");
-            }
-            //user is blocked
+        if(currentContract==null) {
+            return  new ContractAnswerDto("Cant delete tariff: tariff not found");
+        }
+        if (currentContract.getUser().isBlocked()) {
             return new ContractAnswerDto("Cant delete tariff: user is blocked");
         }
-        return  new ContractAnswerDto("Cant delete tariff: tariff not found");
+        if (!contractDao.deleteContract(Integer.parseInt(id))) {
+            return new ContractAnswerDto("Cant delete contract from database");
+        }
+        return null;
     }
 
     public List<ContractInfoAboutUserDto> getAllContractsUserInfo(){
