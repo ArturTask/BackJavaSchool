@@ -4,18 +4,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javaSchoolProject.dao.ContractDao;
-import ru.javaSchoolProject.dao.OptionsDao;
 import ru.javaSchoolProject.dao.TariffDao;
 import ru.javaSchoolProject.dao.UserDao;
 import ru.javaSchoolProject.dto.*;
-import ru.javaSchoolProject.enums.OptionType;
 import ru.javaSchoolProject.models.*;
 
-import javax.swing.plaf.DimensionUIResource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static ru.javaSchoolProject.utils.DtoUtils.*;
 
 @Service
 public class ContractService {
@@ -34,7 +33,7 @@ public class ContractService {
     public ContractAnswerDto signContract(ContractDto contractDto){
 
         User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
-        ContractAnswerDto contractAnswerDto = checkForFailure(contractDto, currentUser);
+        ContractAnswerDto contractAnswerDto = checkSignForFailure(contractDto, currentUser);
 
         if (contractAnswerDto!=null){
             return contractAnswerDto;
@@ -46,7 +45,7 @@ public class ContractService {
 
     }
 
-    private ContractAnswerDto checkForFailure(ContractDto contractDto, User currentUser){
+    private ContractAnswerDto checkSignForFailure(ContractDto contractDto, User currentUser){
         if(!checkContractDto(contractDto)) { //check phoneNum, userId, tariffId
             return new ContractAnswerDto("Invalid contract data(wrong phone number or user/tariff id)");
         }
@@ -73,20 +72,7 @@ public class ContractService {
 
     private Contract makeContract(ContractDto contractDto, User currentUser) {
         Contract newContract = new Contract();
-        List<ContractOptions> newContractOptions = new ArrayList<>();
-
-        if (contractDto.getContractOptions() != null) {
-            for (OptionsDto opDto : contractDto.getContractOptions()) {
-                ContractOptions newOption = new ContractOptions();
-                newOption.setContract(newContract);
-                newOption.setOptionId(Integer.parseInt(opDto.getId()));
-                newOption.setName(opDto.getName());
-                newOption.setOptionType(OptionType.valueOf(opDto.getOptionType()));
-                newOption.setCost(Double.parseDouble(opDto.getCost()));
-
-                newContractOptions.add(newOption);
-            }
-        }
+        List<ContractOptions> newContractOptions = contractOptionsFromDto(contractDto, newContract);
         newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
         newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
         newContract.setUser(currentUser);
@@ -95,8 +81,44 @@ public class ContractService {
     }
 
 
-
     public FullContractDto getContract(ContractIdAndNumberDto contractIdAndNumberDto){
+        //dao contract
+        Contract currentContract = contractDao.getContractById(Integer.parseInt(contractIdAndNumberDto.getContractId()));
+        FullContractDto fullContractDto = checkGetForFailure(contractIdAndNumberDto, currentContract);
+        if (fullContractDto!=null){
+            return fullContractDto;
+        }
+
+
+        //parse contractOptions to optionDtos
+        List<OptionsDto> foundContractOptions = optionDtoFromContractOptions(currentContract);
+
+        //parse options of tariff in contract to optionsDto (all options of tariff)
+        Tariff currentTariff = currentContract.getTariff();
+        List<OptionsDto> foundTariffOptions = optionsDtoFromOptions(currentContract, currentTariff);
+
+        //parse tariff to tariffDto
+        TariffDto tariffDto = tariffDtoFromTariff(currentTariff, foundTariffOptions);
+
+        //make dto response contract
+        return makeFullContractDto(currentContract, foundContractOptions, tariffDto);
+
+    }
+
+    private FullContractDto makeFullContractDto(Contract currentContract, List<OptionsDto> foundContractOptions, TariffDto tariffDto) {
+        FullContractDto foundContract = new FullContractDto();
+        foundContract.setId(String.valueOf(currentContract.getId()));
+        foundContract.setPhoneNumber(String.valueOf(currentContract.getPhoneNumber()));
+        foundContract.setUserId(String.valueOf(currentContract.getUser().getId()));
+
+        foundContract.setContractOptions(foundContractOptions);
+        foundContract.setTariffDto(tariffDto);
+        return foundContract;
+    }
+
+
+
+    private FullContractDto checkGetForFailure(ContractIdAndNumberDto contractIdAndNumberDto, Contract currentContract){
         try{ //easy check
             Integer.parseInt(contractIdAndNumberDto.getContractId());
             Long.parseLong(contractIdAndNumberDto.getPhoneNumber());
@@ -105,8 +127,6 @@ public class ContractService {
             return new FullContractDto();
         }
 
-        //dao contract
-        Contract currentContract = contractDao.getContractById(Integer.parseInt(contractIdAndNumberDto.getContractId()));
         //contract not found
         if(currentContract==null){
             return new FullContractDto();
@@ -115,58 +135,11 @@ public class ContractService {
         if(currentContract.getPhoneNumber()!=Long.parseLong(contractIdAndNumberDto.getPhoneNumber())){ //wrong number
             return new FullContractDto();
         }
-
-        //parse contractOptions to optionDtos
-        List<OptionsDto> foundContractOptions = new ArrayList<>();
-        if(currentContract.getContractOptions()!=null){
-            for (ContractOptions op: currentContract.getContractOptions()) {
-                OptionsDto foundOption = new OptionsDto();
-                foundOption.setId(String.valueOf(op.getId()));
-                foundOption.setName(op.getName());
-                foundOption.setOptionType(String.valueOf(op.getOptionType()));
-                foundOption.setCost(String.valueOf(op.getCost()));
-
-                foundContractOptions.add(foundOption);
-            }
-        }
-
-        //parse options of tariff in contract to optionsDto (all options of tariff)
-        Tariff currentTariff = currentContract.getTariff();
-        List<OptionsDto> foundTariffOptions = new ArrayList<>();
-        if(currentTariff.getOptions()!=null){
-            for (Options op:currentContract.getTariff().getOptions()) {
-                OptionsDto foundOption = new OptionsDto();
-                foundOption.setId(String.valueOf(op.getId()));
-                foundOption.setName(op.getName());
-                foundOption.setOptionType(String.valueOf(op.getOptionType()));
-                foundOption.setCost(String.valueOf(op.getCost()));
-
-                foundTariffOptions.add(foundOption);
-            }
-        }
-
-        //parse tariff to tariffDto
-        TariffDto tariffDto = new TariffDto();
-        tariffDto.setId(currentTariff.getId());
-        tariffDto.setTitle(currentTariff.getTitle());
-        tariffDto.setDescription(currentTariff.getDescription());
-        tariffDto.setOptions(foundTariffOptions);
-        tariffDto.setCost(String.valueOf(currentTariff.getCost()));
-        tariffDto.setActive(currentTariff.isActive());
-
-        //make dto response contract
-        FullContractDto foundContract = new FullContractDto();
-        foundContract.setId(String.valueOf(currentContract.getId()));
-        foundContract.setPhoneNumber(String.valueOf(currentContract.getPhoneNumber()));
-        foundContract.setUserId(String.valueOf(currentContract.getUser().getId()));
-
-        foundContract.setContractOptions(foundContractOptions);
-        foundContract.setTariffDto(tariffDto);
-
-        return foundContract;
+        return null;
 
     }
 
+    // todo refactor!
     public List<ContractIdAndNumberDto> getContractIdsAndNumbers(String userId){
         try{
             Integer.parseInt(userId);
@@ -186,6 +159,7 @@ public class ContractService {
         return foundContractIdAndNumberDtoList;
     }
 
+    // todo refactor!
     public ContractAnswerDto deleteContract(String id){
         try { //easy check
             Integer.parseInt(id);
@@ -237,6 +211,7 @@ public class ContractService {
         return contractDto.getPhoneNumber().startsWith("8777"); //check if operator and country number is valid
     }
 
+    // todo refactor!
     private static boolean checkContractDtoOptions(ContractDto contractDto, Tariff currentTariff){
         List<OptionsDto> chosenOptions = contractDto.getContractOptions();
         if(chosenOptions!=null){ //if options are chosen
