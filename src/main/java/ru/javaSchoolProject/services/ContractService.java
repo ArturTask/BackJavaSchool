@@ -32,10 +32,24 @@ public class ContractService {
     final static Logger logger = Logger.getLogger(TariffService.class.getName());
 
     public ContractAnswerDto signContract(ContractDto contractDto){
+
+        User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
+        ContractAnswerDto contractAnswerDto = checkForFailure(contractDto, currentUser);
+
+        if (contractAnswerDto!=null){
+            return contractAnswerDto;
+        }
+
+        Contract newContract = makeContract(contractDto, currentUser );
+        return saveContract(newContract);
+
+
+    }
+
+    private ContractAnswerDto checkForFailure(ContractDto contractDto, User currentUser){
         if(!checkContractDto(contractDto)) { //check phoneNum, userId, tariffId
             return new ContractAnswerDto("Invalid contract data(wrong phone number or user/tariff id)");
         }
-        User currentUser = userDao.findById(Integer.parseInt(contractDto.getUserId()));
         if(currentUser.isBlocked()){
             return new ContractAnswerDto("User is blocked");
         }
@@ -46,18 +60,7 @@ public class ContractService {
         if (checkContractDtoOptions(contractDto, tariff)) { //check if all options are from chosen tariff
             return new ContractAnswerDto("cant save contract options are invalid"); // didn't pass option check
         }
-
-        Contract newContract = new Contract();
-        List<ContractOptions> newContractOptions = new ArrayList<>();
-
-        //contractOptions from optionDto
-        makeContractOptionsFromDto(contractDto, newContract, newContractOptions);
-
-        makeContract(contractDto, currentUser, newContract, newContractOptions);
-
-        return saveContract(newContract);
-
-
+        return null;
     }
 
     private ContractAnswerDto saveContract(Contract newContract) {
@@ -68,14 +71,10 @@ public class ContractService {
         }
     }
 
-    private void makeContract(ContractDto contractDto, User currentUser, Contract newContract, List<ContractOptions> newContractOptions) {
-        newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
-        newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
-        newContract.setUser(currentUser);
-        newContract.setContractOptions(newContractOptions);
-    }
+    private Contract makeContract(ContractDto contractDto, User currentUser) {
+        Contract newContract = new Contract();
+        List<ContractOptions> newContractOptions = new ArrayList<>();
 
-    private void makeContractOptionsFromDto(ContractDto contractDto, Contract newContract, List<ContractOptions> newContractOptions) {
         if (contractDto.getContractOptions() != null) {
             for (OptionsDto opDto : contractDto.getContractOptions()) {
                 ContractOptions newOption = new ContractOptions();
@@ -88,7 +87,14 @@ public class ContractService {
                 newContractOptions.add(newOption);
             }
         }
+        newContract.setPhoneNumber(Long.parseLong(contractDto.getPhoneNumber()));
+        newContract.setTariff(tariffDao.findTariffById(Integer.parseInt(contractDto.getTariffId())));
+        newContract.setUser(currentUser);
+        newContract.setContractOptions(newContractOptions);
+        return newContract;
     }
+
+
 
     public FullContractDto getContract(ContractIdAndNumberDto contractIdAndNumberDto){
         try{ //easy check
